@@ -3256,29 +3256,32 @@ FINISH
 ========================================================= */
 
 const startScreen =
-document.getElementById("startScreen");
+    document.getElementById("startScreen");
 
 const passwordScreen =
-document.getElementById("passwordScreen");
+    document.getElementById("passwordScreen");
 
 const game =
-document.getElementById("game");
+    document.getElementById("game");
 
 const passwordInput =
-document.getElementById("passwordInput");
+    document.getElementById("passwordInput");
 
 const errorMessage =
-document.getElementById("errorMessage");
+    document.getElementById("errorMessage");
 
 const music =
-document.getElementById("music");
+    document.getElementById("music");
 
 const musicButton =
-document.getElementById("musicButton");
+    document.getElementById("musicButton");
+
+const pressStart =
+    document.getElementById("pressStart");
 
 
 /* =========================================================
-   START BUTTON
+   PRESS START BUTTON
 ========================================================= */
 
 function showPassword(){
@@ -3289,7 +3292,8 @@ function showPassword(){
 
     passwordScreen.style.opacity = "0";
 
-    passwordScreen.style.transition = "opacity 0.6s ease";
+    passwordScreen.style.transition =
+        "opacity 0.6s ease";
 
     setTimeout(function(){
 
@@ -3299,13 +3303,23 @@ function showPassword(){
 
 }
 
-   
-   
-document.getElementById("pressStart").addEventListener("click", function(){
 
-    showPassword();
+/* =========================================================
+   PRESS START CLICK
+========================================================= */
 
-});
+if(pressStart){
+
+    pressStart.addEventListener(
+        "click",
+        function(){
+
+            showPassword();
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -3320,7 +3334,7 @@ function unlockGame(){
         .toLowerCase();
 
 
-    const validPasswords=[
+    const validPasswords = [
 
         "baby",
 
@@ -3333,15 +3347,15 @@ function unlockGame(){
     ];
 
 
-    if(
-        validPasswords.includes(password)
-    ){
+    if(validPasswords.includes(password)){
 
-        passwordScreen.style.display="none";
+        passwordScreen.style.display =
+            "none";
 
         game.classList.add("active");
 
-        document.body.style.overflowY="auto";
+        document.body.style.overflowY =
+            "auto";
 
         window.scrollTo(0,0);
 
@@ -3351,13 +3365,18 @@ function unlockGame(){
 
     else{
 
-        errorMessage.style.display="block";
+        errorMessage.style.display =
+            "block";
 
-        passwordInput.classList.add("shake");
+        passwordInput.classList.add(
+            "shake"
+        );
 
-        setTimeout(()=>{
+        setTimeout(function(){
 
-            passwordInput.classList.remove("shake");
+            passwordInput.classList.remove(
+                "shake"
+            );
 
         },500);
 
@@ -3367,24 +3386,25 @@ function unlockGame(){
 
 
 /* =========================================================
-   ENTER KEY
+   ENTER KEY FOR PASSWORD
 ========================================================= */
 
-passwordInput.addEventListener(
+if(passwordInput){
 
-    "keydown",
+    passwordInput.addEventListener(
+        "keydown",
+        function(event){
 
-    function(event){
+            if(event.key === "Enter"){
 
-        if(event.key==="Enter"){
+                unlockGame();
 
-            unlockGame();
+            }
 
         }
+    );
 
-    }
-
-);
+}
 
 
 /* =========================================================
@@ -3393,7 +3413,7 @@ passwordInput.addEventListener(
 
 function startMusic(){
 
-    if(!music.src){
+    if(!music || !music.src){
 
         return;
 
@@ -3402,15 +3422,19 @@ function startMusic(){
 
     music.play()
 
-    .then(()=>{
+    .then(function(){
 
-        musicButton.classList.add(
-            "playing"
-        );
+        if(musicButton){
+
+            musicButton.classList.add(
+                "playing"
+            );
+
+        }
 
     })
 
-    .catch(()=>{
+    .catch(function(){
 
         console.log(
             "Music requires interaction."
@@ -3421,9 +3445,13 @@ function startMusic(){
 }
 
 
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
 function toggleMusic(){
 
-    if(!music.src){
+    if(!music || !music.src){
 
         alert(
             "Add your song to the page first."
@@ -3438,9 +3466,13 @@ function toggleMusic(){
 
         music.play();
 
-        musicButton.classList.add(
-            "playing"
-        );
+        if(musicButton){
+
+            musicButton.classList.add(
+                "playing"
+            );
+
+        }
 
     }
 
@@ -3448,9 +3480,13 @@ function toggleMusic(){
 
         music.pause();
 
-        musicButton.classList.remove(
-            "playing"
-        );
+        if(musicButton){
+
+            musicButton.classList.remove(
+                "playing"
+            );
+
+        }
 
     }
 
@@ -3481,38 +3517,21 @@ function goTo(id){
 
 
 /* =========================================================
-   IMAGE UPLOAD
+   YOUR PHOTOS
 ========================================================= */
 
 /*
 
-IMPORTANT:
+These are the 8 photos used in the
+MEMORY INVENTORY section.
 
-Because this is ONE HTML FILE,
-you can add your pictures by
-dragging them into the browser.
-
-For a permanent version,
-you can later embed the images
-directly into the HTML.
+Make sure these files are in the
+same folder as your HTML file.
 
 */
 
-document.addEventListener(
+const placeholders = [
 
-    "DOMContentLoaded",
-
-    function(){
-
-        /*
-        Placeholder images.
-
-        Replace these later with
-        your actual photos.
-        */
-
-        const placeholders = [
-           
     "photo9.jpg",
 
     "photo1.jpg.jpg",
@@ -3527,21 +3546,79 @@ document.addEventListener(
 
     "photo6.jpg.jpg",
 
-    "photo7.jpg.jpg",
+    "photo7.jpg.jpg"
 
 ];
 
-      document.getElementById("float1").src = "photo8,jpg.jpg";
 
-document.getElementById("float2").src = "photo4.jpg.jpg";
+/* =========================================================
+   MEMORY PHOTOS
+========================================================= */
 
-document.getElementById("float3").src = "photo6.jpg.jpg";
+for(let i = 0; i < 8; i++){
+
+    const img =
+        document.getElementById(
+            "photo" + (i + 1)
+        );
 
 
-        /*
-        Floating photos
-        */
+    if(img){
 
+        img.src =
+            placeholders[i];
+
+    }
+
+}
+
+
+/* =========================================================
+   FLOATING PHOTOS
+========================================================= */
+
+/*
+
+These are the 3 floating photos
+on the first birthday screen.
+
+You can change these filenames
+whenever you want.
+
+*/
+
+const float1 =
+    document.getElementById("float1");
+
+const float2 =
+    document.getElementById("float2");
+
+const float3 =
+    document.getElementById("float3");
+
+
+if(float1){
+
+    float1.src =
+        "photo8,jpg.jpg";
+
+}
+
+
+if(float2){
+
+    float2.src =
+        "photo4.jpg.jpg";
+
+}
+
+
+if(float3){
+
+    float3.src =
+        "photo6.jpg.jpg";
+
+}
 
 
 /* =========================================================
@@ -3549,9 +3626,7 @@ document.getElementById("float3").src = "photo6.jpg.jpg";
 ========================================================= */
 
 document.addEventListener(
-
     "mousemove",
-
     function(event){
 
         const cards =
@@ -3561,36 +3636,37 @@ document.addEventListener(
 
 
         const x =
-            (window.innerWidth/2-event.clientX)
-            /40;
+            (
+                window.innerWidth / 2
+                - event.clientX
+            ) / 40;
 
 
         const y =
-            (window.innerHeight/2-event.clientY)
-            /40;
+            (
+                window.innerHeight / 2
+                - event.clientY
+            ) / 40;
 
 
         cards.forEach(
-
-            (card,index)=>{
+            function(card,index){
 
                 const multiplier =
-                    index+1;
+                    index + 1;
 
 
                 card.style.marginLeft =
-                    (x*multiplier)+"px";
+                    (x * multiplier) + "px";
 
 
                 card.style.marginTop =
-                    (y*multiplier)+"px";
+                    (y * multiplier) + "px";
 
             }
-
         );
 
     }
-
 );
 
 
@@ -3599,54 +3675,56 @@ document.addEventListener(
 ========================================================= */
 
 const observer =
-new IntersectionObserver(
+    new IntersectionObserver(
 
-    entries=>{
+        function(entries){
 
-        entries.forEach(entry=>{
+            entries.forEach(
+                function(entry){
 
-            if(entry.isIntersecting){
+                    if(entry.isIntersecting){
 
-                entry.target.style.opacity="1";
+                        entry.target.style.opacity =
+                            "1";
 
-                entry.target.style.transform=
-                    "translateY(0)";
+                        entry.target.style.transform =
+                            "translateY(0)";
 
-            }
+                    }
 
-        });
+                }
+            );
 
-    },
+        },
 
-    {
-        threshold:.15
-    }
+        {
+            threshold:0.15
+        }
 
-);
+    );
 
 
 document
-.querySelectorAll(
-    ".quest-box,.game-photo,.letter-paper,.poem-card"
-)
-.forEach(
+    .querySelectorAll(
+        ".quest-box,.game-photo,.letter-paper,.poem-card"
+    )
+    .forEach(
+        function(element){
 
-    element=>{
+            element.style.opacity =
+                "0";
 
-        element.style.opacity="0";
+            element.style.transform =
+                "translateY(40px)";
 
-        element.style.transform=
-            "translateY(40px)";
-
-        element.style.transition=
-            "all .8s ease";
+            element.style.transition =
+                "all .8s ease";
 
 
-        observer.observe(element);
+            observer.observe(element);
 
-    }
-
-);
+        }
+    );
 
 
 /* =========================================================
@@ -3654,36 +3732,34 @@ document
 ========================================================= */
 
 document.addEventListener(
-
     "keydown",
-
     function(event){
-
-        /*
-        M = Memories
-        L = Letter
-        P = Poem
-        */
 
         if(
             game.classList.contains("active")
         ){
 
-            if(event.key.toLowerCase()==="m"){
+            if(
+                event.key.toLowerCase() === "m"
+            ){
 
                 goTo("level3");
 
             }
 
 
-            if(event.key.toLowerCase()==="l"){
+            if(
+                event.key.toLowerCase() === "l"
+            ){
 
                 goTo("level4");
 
             }
 
 
-            if(event.key.toLowerCase()==="p"){
+            if(
+                event.key.toLowerCase() === "p"
+            ){
 
                 goTo("level5");
 
@@ -3692,7 +3768,6 @@ document.addEventListener(
         }
 
     }
-
 );
 
 
@@ -3700,12 +3775,8 @@ document.addEventListener(
    INITIAL STATE
 ========================================================= */
 
-document.body.style.overflow="hidden";
+document.body.style.overflow =
+    "hidden";
 
 
 </script>
-
-
-</body>
-
-</html>
