@@ -1,1 +1,2503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Thero Story ❤️</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#070607;
+    color:#f5eee5;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+    --black:#070607;
+    --dark:#0e0b0d;
+    --cream:#f5eee5;
+    --gold:#d9b26f;
+    --pink:#b96a7d;
+    --grey:#aaa29a;
+}
+
+
+/* =========================================================
+   LOGIN SCREEN
+========================================================= */
+
+#loginScreen{
+
+    position:fixed;
+    inset:0;
+
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(190,55,90,.28),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(217,178,111,.16),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #050405,
+            #180b12,
+            #050505
+        );
+}
+
+
+#loginScreen.hide{
+    animation:loginDisappear 1s forwards;
+}
+
+
+@keyframes loginDisappear{
+
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+
+}
+
+
+.login-container{
+
+    width:min(650px,90%);
+
+    animation:appear 1.3s ease;
+}
+
+
+@keyframes appear{
+
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+.small-title{
+
+    color:var(--gold);
+
+    font-size:10px;
+
+    letter-spacing:5px;
+
+    margin-bottom:25px;
+}
+
+
+.login-container h1{
+
+    font-family:Georgia,serif;
+
+    font-size:clamp(55px,11vw,120px);
+
+    line-height:.78;
+
+    font-weight:400;
+
+    letter-spacing:3px;
+}
+
+
+.login-container h1 span{
+
+    color:var(--gold);
+
+    font-style:italic;
+}
+
+
+.login-subtitle{
+
+    color:#c8c0b8;
+
+    margin:30px 0;
+
+    font-size:15px;
+}
+
+
+.login-box{
+
+    width:min(400px,100%);
+
+    margin:auto;
+
+    padding:35px;
+
+    background:rgba(10,8,10,.8);
+
+    border:1px solid rgba(217,178,111,.3);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:0 25px 80px #000;
+}
+
+
+.heart{
+
+    color:var(--gold);
+
+    font-size:30px;
+
+    margin-bottom:12px;
+}
+
+
+.login-box h3{
+
+    font-family:Georgia,serif;
+
+    letter-spacing:3px;
+
+    font-size:14px;
+}
+
+
+.login-box p{
+
+    color:#999;
+
+    font-size:12px;
+
+    margin:10px 0 20px;
+}
+
+
+#password{
+
+    width:100%;
+
+    padding:15px;
+
+    background:#080708;
+
+    border:1px solid #403a35;
+
+    color:white;
+
+    outline:none;
+
+    text-align:center;
+
+    margin-bottom:12px;
+}
+
+
+#password:focus{
+
+    border-color:var(--gold);
+
+}
+
+
+#loginButton{
+
+    width:100%;
+
+    padding:15px;
+
+    border:1px solid var(--gold);
+
+    background:var(--gold);
+
+    color:#111;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+
+#loginButton:hover{
+
+    background:transparent;
+
+    color:var(--gold);
+}
+
+
+#error{
+
+    display:none;
+
+    color:#e78b9c;
+
+    font-size:12px;
+
+    margin-top:12px;
+}
+
+
+.hint{
+
+    color:#666;
+
+    font-size:11px;
+
+    margin-top:20px;
+}
+
+
+.credit{
+
+    color:#444;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    margin-top:40px;
+}
+
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+.upload-area{
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:1px dashed #4c4032;
+
+    color:#888;
+
+    font-size:11px;
+}
+
+
+.upload-area label{
+
+    color:var(--gold);
+
+    cursor:pointer;
+
+}
+
+
+.upload-area input{
+
+    display:none;
+
+}
+
+
+/* =========================================================
+   MAIN WEBSITE
+========================================================= */
+
+#website{
+
+    display:none;
+}
+
+
+#website.show{
+
+    display:block;
+
+    animation:websiteAppear 1.5s ease;
+}
+
+
+@keyframes websiteAppear{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+#musicButton{
+
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    z-index:500;
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    border:1px solid var(--gold);
+
+    background:#0b090a;
+
+    color:var(--gold);
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    box-shadow:0 10px 40px #000;
+}
+
+
+#musicButton.playing{
+
+    animation:pulse 1.5s infinite;
+}
+
+
+@keyframes pulse{
+
+    50%{
+        box-shadow:
+        0 0 0 10px rgba(217,178,111,.08),
+        0 10px 40px #000;
+    }
+
+}
+
+
+/* =========================================================
+   NAV
+========================================================= */
+
+nav{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:20;
+
+    padding:28px 6vw;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+
+.logo{
+
+    font-family:Georgia,serif;
+
+    font-size:18px;
+}
+
+
+.logo span{
+
+    color:var(--gold);
+}
+
+
+.nav-text{
+
+    color:#888;
+
+    font-size:9px;
+
+    letter-spacing:4px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:120px 9vw;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(180,60,90,.18),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            110deg,
+            #070607,
+            #120d10,
+            #070607
+        );
+}
+
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5,4,5,.98),
+            rgba(5,4,5,.4),
+            rgba(5,4,5,.8)
+        );
+
+    pointer-events:none;
+}
+
+
+.hero-content{
+
+    position:relative;
+
+    z-index:5;
+
+    max-width:700px;
+}
+
+
+.eyebrow{
+
+    color:var(--gold);
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+}
+
+
+.hero h1{
+
+    font-family:Georgia,serif;
+
+    font-weight:400;
+
+    font-size:clamp(60px,9vw,125px);
+
+    line-height:.8;
+
+    margin:25px 0;
+}
+
+
+.hero h1 i{
+
+    color:var(--gold);
+}
+
+
+.hero h1 span{
+
+    font-size:.55em;
+
+    letter-spacing:10px;
+}
+
+
+.hero p{
+
+    color:#c8c0b9;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    margin-bottom:30px;
+}
+
+
+.gold-button{
+
+    padding:15px 25px;
+
+    background:var(--gold);
+
+    border:1px solid var(--gold);
+
+    color:#111;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+
+.gold-button:hover{
+
+    background:transparent;
+
+    color:var(--gold);
+}
+
+
+/* =========================================================
+   FLOATING PHOTOS
+========================================================= */
+
+.floating-photo{
+
+    position:absolute;
+
+    z-index:10;
+
+    width:180px;
+
+    background:#eee;
+
+    padding:8px 8px 25px;
+
+    box-shadow:0 20px 60px #000;
+
+    color:#222;
+
+    animation:float 5s ease-in-out infinite;
+}
+
+
+.floating-photo img{
+
+    width:100%;
+
+    height:210px;
+
+    object-fit:cover;
+}
+
+
+.floating-photo p{
+
+    color:#222;
+
+    text-align:center;
+
+    font-family:cursive;
+
+    margin:7px 0 0;
+
+    font-size:12px;
+}
+
+
+.photo1{
+
+    right:12%;
+
+    top:17%;
+
+    transform:rotate(8deg);
+}
+
+
+.photo2{
+
+    right:25%;
+
+    bottom:13%;
+
+    transform:rotate(-7deg);
+
+    animation-delay:-2s;
+}
+
+
+.photo3{
+
+    right:4%;
+
+    bottom:24%;
+
+    transform:rotate(4deg);
+
+    animation-delay:-3s;
+}
+
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0) rotate(4deg);
+    }
+
+    50%{
+        transform:translateY(-20px) rotate(7deg);
+    }
+
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro{
+
+    padding:130px 9vw;
+
+    display:grid;
+
+    grid-template-columns:70px 1fr 1fr;
+
+    gap:30px;
+
+    border-bottom:1px solid #262126;
+}
+
+
+.intro h2{
+
+    font-family:Georgia,serif;
+
+    font-size:clamp(35px,5vw,65px);
+
+    font-weight:400;
+
+    line-height:1.05;
+
+    margin-top:20px;
+}
+
+
+.intro p{
+
+    color:#aaa;
+
+    line-height:2;
+
+    align-self:end;
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery{
+
+    padding:130px 9vw;
+
+    background:#0b090b;
+}
+
+
+.gallery-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:end;
+
+    margin-bottom:55px;
+}
+
+
+.gallery h2{
+
+    font-family:Georgia,serif;
+
+    font-size:clamp(40px,5vw,65px);
+
+    font-weight:400;
+
+    line-height:1;
+}
+
+
+.gallery-label{
+
+    color:#777;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+}
+
+
+.gallery-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.3fr
+        .8fr
+        1fr;
+
+    gap:18px;
+}
+
+
+.memory{
+
+    overflow:hidden;
+}
+
+
+.memory img{
+
+    width:100%;
+
+    height:360px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.7s;
+
+    filter:saturate(.8);
+}
+
+
+.memory:hover img{
+
+    transform:scale(1.07);
+
+    filter:saturate(1);
+}
+
+
+.memory.large img{
+
+    height:570px;
+}
+
+
+.memory.tall img{
+
+    height:480px;
+}
+
+
+.memory.wide{
+
+    grid-column:2/4;
+}
+
+
+.memory.wide img{
+
+    height:390px;
+}
+
+
+.memory p{
+
+    color:#888;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    padding:12px 0;
+}
+
+
+/* =========================================================
+   LETTER
+========================================================= */
+
+.letter-section{
+
+    background:#f0e8df;
+
+    color:#211b1b;
+
+    padding:130px 9vw;
+}
+
+
+.letter-container{
+
+    max-width:850px;
+
+    margin:auto;
+}
+
+
+.letter-section .eyebrow{
+
+    color:#92703b;
+}
+
+
+.letter-section h2{
+
+    font-family:Georgia,serif;
+
+    font-size:clamp(45px,6vw,80px);
+
+    font-weight:400;
+
+    margin:20px 0 50px;
+}
+
+
+.letter{
+
+    font-family:Georgia,serif;
+
+    font-size:18px;
+
+    line-height:2;
+}
+
+
+.letter p{
+
+    margin-bottom:27px;
+}
+
+
+.letter strong{
+
+    color:#805b2c;
+}
+
+
+.signature{
+
+    color:#76572e;
+
+    font-size:21px;
+
+    margin-top:50px;
+}
+
+
+.signature span{
+
+    font-family:cursive;
+
+    font-size:30px;
+}
+
+
+/* =========================================================
+   POEM
+========================================================= */
+
+.poem{
+
+    padding:130px 9vw;
+
+    min-height:900px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(150,40,70,.13),
+            transparent 45%
+        ),
+
+        #100b0f;
+}
+
+
+.poem h2{
+
+    font-family:Georgia,serif;
+
+    font-size:75px;
+
+    font-weight:400;
+
+    margin:20px 0 45px;
+}
+
+
+.poem-text{
+
+    font-family:Georgia,serif;
+
+    font-style:italic;
+
+    color:#d6cec5;
+
+    font-size:21px;
+
+    line-height:1.9;
+}
+
+
+.poem-text p{
+
+    margin-bottom:30px;
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(170,60,90,.22),
+            transparent 50%
+        ),
+
+        #080708;
+}
+
+
+.final-content{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:50px;
+}
+
+
+.final h2{
+
+    font-family:Georgia,serif;
+
+    font-size:clamp(70px,10vw,140px);
+
+    font-weight:400;
+
+    line-height:.85;
+
+    margin:30px 0;
+}
+
+
+.final h2 i{
+
+    color:var(--gold);
+}
+
+
+.final-description{
+
+    color:#aaa;
+
+    font-size:15px;
+}
+
+
+.credits{
+
+    margin:60px auto;
+
+    display:grid;
+
+    gap:8px;
+
+    max-width:500px;
+
+    font-size:9px;
+
+    color:#666;
+
+    letter-spacing:3px;
+}
+
+
+.credits strong{
+
+    color:#cfc7bd;
+
+    font-size:11px;
+
+    margin-bottom:15px;
+}
+
+
+.final h3{
+
+    color:var(--gold);
+
+    font-family:Georgia,serif;
+
+    letter-spacing:3px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    padding:25px 6vw;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#555;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    background:#070607;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:800px){
+
+    .nav-text{
+
+        display:none;
+    }
+
+
+    .hero{
+
+        padding:120px 7vw;
+    }
+
+
+    .hero h1{
+
+        font-size:60px;
+    }
+
+
+    .floating-photo{
+
+        display:none;
+    }
+
+
+    .intro{
+
+        grid-template-columns:45px 1fr;
+
+        padding:80px 7vw;
+    }
+
+
+    .intro p{
+
+        grid-column:2;
+
+        margin-top:25px;
+    }
+
+
+    .gallery{
+
+        padding:80px 7vw;
+    }
+
+
+    .gallery-header{
+
+        display:block;
+    }
+
+
+    .gallery-label{
+
+        margin-top:20px;
+    }
+
+
+    .gallery-grid{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+
+    .memory.large{
+
+        grid-column:1/3;
+    }
+
+
+    .memory.large img{
+
+        height:400px;
+    }
+
+
+    .memory img{
+
+        height:280px;
+    }
+
+
+    .memory.wide{
+
+        grid-column:1/3;
+    }
+
+
+    .letter-section{
+
+        padding:80px 7vw;
+    }
+
+
+    .letter{
+
+        font-size:16px;
+
+        line-height:1.85;
+    }
+
+
+    .poem{
+
+        padding:80px 7vw;
+    }
+
+
+    .poem h2{
+
+        font-size:55px;
+    }
+
+
+    .poem-text{
+
+        font-size:18px;
+    }
+
+
+    footer{
+
+        display:block;
+
+        line-height:2.5;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     PASSWORD SCREEN
+===================================================== -->
+
+<div id="loginScreen">
+
+    <div class="login-container">
+
+        <div class="small-title">
+            A SPECIAL PRESENTATION
+        </div>
+
+
+        <h1>
+
+            THE
+
+            <br>
+
+            <span>THERO</span>
+
+            <br>
+
+            STORY
+
+        </h1>
+
+
+        <p class="login-subtitle">
+
+            A birthday movie made especially
+            for my favourite person.
+
+        </p>
+
+
+        <div class="login-box">
+
+            <div class="heart">
+                ♥
+            </div>
+
+
+            <h3>
+                PRIVATE SCREENING
+            </h3>
+
+
+            <p>
+                Enter the secret password to continue.
+            </p>
+
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Our secret..."
+            >
+
+
+            <button id="loginButton">
+
+                WATCH THE MOVIE
+
+                <span>→</span>
+
+            </button>
+
+
+            <div id="error">
+                That's not it, Baby... try again ♥
+            </div>
+
+
+            <div class="upload-area">
+
+                Your photos can be added directly
+                from this page.
+
+                <br><br>
+
+                <label for="photoUpload">
+
+                    📸 SELECT OUR PHOTOS
+
+                </label>
+
+                <input
+                    id="photoUpload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                >
+
+            </div>
+
+
+            <div class="upload-area">
+
+                <label for="songUpload">
+
+                    🎵 SELECT OUR SONG
+
+                </label>
+
+                <input
+                    id="songUpload"
+                    type="file"
+                    accept="audio/*"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="hint">
+
+            Hint: try <b>baby</b>, <b>spiderman</b>,
+            <b>love</b> or <b>thero</b>.
+
+        </div>
+
+
+        <div class="credit">
+
+            FOR THERO • MADE WITH LOVE
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     WEBSITE
+===================================================== -->
+
+<div id="website">
+
+
+<!-- MUSIC -->
+
+<audio
+    id="music"
+    loop
+></audio>
+
+
+<button
+    id="musicButton"
+>
+    ♫
+</button>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<header class="hero">
+
+
+    <nav>
+
+        <div class="logo">
+
+            T <span>♥</span> T
+
+        </div>
+
+
+        <div class="nav-text">
+
+            A FILM ABOUT US
+
+        </div>
+
+    </nav>
+
+
+    <div class="hero-content">
+
+
+        <div class="eyebrow">
+
+            NOW PLAYING • YOUR SPECIAL DAY
+
+        </div>
+
+
+        <h1>
+
+            HAPPY
+
+            <br>
+
+            <i>BIRTHDAY</i>
+
+            <br>
+
+            <span>THERO</span>
+
+        </h1>
+
+
+        <p>
+
+            To my Baby.
+            My Big Daddy.
+            My Spiderman.
+
+            <br>
+
+            My favourite person
+            in the whole story.
+
+        </p>
+
+
+        <button
+            class="gold-button"
+            onclick="goTo('letter')"
+        >
+
+            BEGIN OUR STORY ↓
+
+        </button>
+
+
+    </div>
+
+
+    <!-- PHOTOS -->
+
+    <div
+        class="floating-photo photo1"
+        id="floating1"
+    >
+
+        <img>
+
+        <p>
+            my favourite smile
+        </p>
+
+    </div>
+
+
+    <div
+        class="floating-photo photo2"
+        id="floating2"
+    >
+
+        <img>
+
+        <p>
+            my Spiderman ♥
+        </p>
+
+    </div>
+
+
+    <div
+        class="floating-photo photo3"
+        id="floating3"
+    >
+
+        <img>
+
+        <p>
+            us
+        </p>
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section class="intro">
+
+
+    <div class="eyebrow">
+        01
+    </div>
+
+
+    <div>
+
+        <div class="eyebrow">
+            THE PREMISE
+        </div>
+
+
+        <h2>
+
+            Every great love story
+            <br>
+
+            has a favourite character.
+
+        </h2>
+
+    </div>
+
+
+    <p>
+
+        Mine is you, Thero.
+
+        This little website is my way of
+        turning your birthday into a movie
+        because you deserve a day that feels
+        different, special, intentional and
+        completely yours.
+
+    </p>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     GALLERY
+===================================================== -->
+
+<section class="gallery">
+
+
+    <div class="gallery-header">
+
+
+        <div>
+
+            <div class="eyebrow">
+                SCENES FROM US
+            </div>
+
+
+            <h2>
+
+                Moments I'd
+                <br>
+
+                rewatch forever.
+
+            </h2>
+
+        </div>
+
+
+        <div class="gallery-label">
+
+            ♥ PLAYING IN MY HEART
+
+        </div>
+
+
+    </div>
+
+
+    <div class="gallery-grid">
+
+
+        <div class="memory large">
+
+            <img id="gallery1">
+
+            <p>
+                Scene I — My Baby
+            </p>
+
+        </div>
+
+
+        <div class="memory tall">
+
+            <img id="gallery2">
+
+            <p>
+                Scene II — My Big Daddy
+            </p>
+
+        </div>
+
+
+        <div class="memory">
+
+            <img id="gallery3">
+
+            <p>
+                Scene III — Just us
+            </p>
+
+        </div>
+
+
+        <div class="memory">
+
+            <img id="gallery4">
+
+            <p>
+                Scene IV — My Spiderman
+            </p>
+
+        </div>
+
+
+        <div class="memory wide">
+
+            <img id="gallery5">
+
+            <p>
+                Scene V — A memory worth keeping
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LETTER
+===================================================== -->
+
+<section
+    class="letter-section"
+    id="letter"
+>
+
+
+    <div class="letter-container">
+
+
+        <div class="eyebrow">
+            02 • A LETTER FOR YOU
+        </div>
+
+
+        <h2>
+            My Baby, Thero...
+        </h2>
+
+
+        <div class="letter">
+
+
+            <p>
+
+                Happy birthday to my Baby, my Big Daddy,
+                my Spiderman, and one of the most beautiful
+                parts of my life.
+
+            </p>
+
+
+            <p>
+
+                Today is about celebrating you — the person
+                you are, the person you are becoming, your
+                dreams, your heart, your smile, your strength,
+                your softness, and even all the little things
+                you do that you probably don't realise I notice.
+
+                I hope you wake up today knowing just how
+                loved you are. I hope you feel special,
+                appreciated, wanted and celebrated, because
+                you deserve every bit of it.
+
+            </p>
+
+
+            <p>
+
+                I hope you have the most amazing birthday,
+                Baby. I hope today gives you reasons to smile
+                until your cheeks hurt. I hope you laugh,
+                eat your favourite food, enjoy every little
+                surprise and allow yourself to be spoiled.
+
+                But most importantly, I hope you remember
+                that your birthday is not just a celebration
+                of another year.
+
+                It is a celebration of the fact that the world
+                got you — and somehow, I got lucky enough
+                to have you in my life.
+
+            </p>
+
+
+            <p>
+
+                I want you to know something:
+
+                <strong>
+                    your birthdays will never be
+                    ordinary again.
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Not while I am here.
+
+                Every birthday we get to share is going to
+                be magical, thoughtful and full of little
+                pieces of our story.
+
+                I want every year to have its own memory.
+
+                I want photographs we can look back at,
+                jokes only we understand, adventures we
+                never planned, food we absolutely over-order,
+                and moments that make us stop and think,
+
+                "Wow, look how far we've come."
+
+            </p>
+
+
+            <p>
+
+                I want to celebrate every version of you.
+
+                The happy you.
+
+                The tired you.
+
+                The ambitious you.
+
+                The silly you.
+
+                The stubborn you.
+
+                The quiet you.
+
+                The Big Daddy you.
+
+                The Spiderman you.
+
+                All of you.
+
+            </p>
+
+
+            <p>
+
+                I want to be there for the chapters nobody
+                else sees and cheer the loudest when you
+                accomplish the things you've been working
+                toward.
+
+            </p>
+
+
+            <p>
+
+                Thank you for every memory we already have.
+
+                Thank you for every conversation,
+                every laugh, every hug, every random moment,
+                every look, every silly thing that somehow
+                became a memory I treasure.
+
+                Thank you for being someone I can love,
+                annoy, laugh with and make beautiful
+                memories with.
+
+            </p>
+
+
+            <p>
+
+                I hope this next chapter of your life is
+                kind to you.
+
+                I hope it brings opportunities that make
+                you proud, people who genuinely love you,
+                peace when you need it, courage when things
+                get hard, and happiness that stays long after
+                your birthday candles disappear.
+
+            </p>
+
+
+            <p>
+
+                And when another birthday comes around,
+                I hope we are still here — older, wiser,
+                probably still being ridiculous, but still
+                choosing each other.
+
+            </p>
+
+
+            <p>
+
+                I hope we look at this website and laugh
+                at how everything started.
+
+                I hope we have hundreds more photographs
+                to add, hundreds more memories to make,
+                and a lifetime of birthdays to celebrate.
+
+            </p>
+
+
+            <p>
+
+                So happy birthday, my Baby.
+
+                <br>
+
+                My Big Daddy.
+
+                <br>
+
+                My Spiderman.
+
+                <br>
+
+                My favourite person.
+
+            </p>
+
+
+            <p class="signature">
+
+                I love you more than this little movie
+                could ever explain.
+
+                <br><br>
+
+                <span>
+                    Forever yours ♥
+                </span>
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     POEM
+===================================================== -->
+
+<section class="poem">
+
+
+    <div>
+
+        <div class="eyebrow">
+            03 • A LITTLE POEM
+        </div>
+
+
+        <h2>
+            For Thero
+        </h2>
+
+
+        <div class="poem-text">
+
+
+            <p>
+
+                Some people are chapters,
+
+                <br>
+
+                some are stories,
+
+                <br>
+
+                but you, my love,
+
+                <br>
+
+                feel like the whole movie.
+
+            </p>
+
+
+            <p>
+
+                Every laugh is a scene,
+
+                <br>
+
+                every hug is a home,
+
+                <br>
+
+                every birthday together
+
+                <br>
+
+                is another reason I know—
+
+            </p>
+
+
+            <p>
+
+                That ordinary days
+
+                <br>
+
+                can become something bright,
+
+                <br>
+
+                when I'm beside you,
+
+                <br>
+
+                everything feels right.
+
+            </p>
+
+
+            <p>
+
+                So here's to your birthday,
+
+                <br>
+
+                and all those to come,
+
+                <br>
+
+                to every new memory,
+
+                <br>
+
+                and every new sun.
+
+            </p>
+
+
+            <p>
+
+                My Baby, my Big Daddy,
+
+                <br>
+
+                my Spiderman too—
+
+                <br>
+
+                if I could choose again,
+
+                <br>
+
+                I'd still choose you.
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL SCENE
+===================================================== -->
+
+<section class="final">
+
+
+    <div class="final-content">
+
+
+        <div class="eyebrow">
+
+            THE END...
+
+            <br><br>
+
+            OR JUST THE BEGINNING?
+
+        </div>
+
+
+        <h2>
+
+            TO BE
+
+            <br>
+
+            <i>CONTINUED.</i>
+
+        </h2>
+
+
+        <p class="final-description">
+
+            Because our story has so many more
+            birthdays to celebrate.
+
+        </p>
+
+
+        <div class="credits">
+
+
+            <span>
+                STARRING
+            </span>
+
+            <strong>
+                THERO
+            </strong>
+
+
+            <span>
+                CO-STARRING
+            </span>
+
+            <strong>
+                THE GIRL WHO LOVES HIM VERY MUCH
+            </strong>
+
+
+            <span>
+                GENRE
+            </span>
+
+            <strong>
+                LOVE • COMEDY • FOREVER
+            </strong>
+
+
+        </div>
+
+
+        <h3>
+
+            HAPPY BIRTHDAY, BABY ♥
+
+        </h3>
+
+
+    </div>
+
+</section>
+
+
+
+<footer>
+
+    <span>
+        THE THERO STORY
+    </span>
+
+
+    <span>
+        MADE WITH LOVE • FOREVER & ALWAYS
+    </span>
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const password =
+    document.getElementById("password");
+
+const loginScreen =
+    document.getElementById("loginScreen");
+
+const website =
+    document.getElementById("website");
+
+const error =
+    document.getElementById("error");
+
+
+const correctPasswords = [
+
+    "love",
+    "baby",
+    "spiderman",
+    "thero"
+
+];
+
+
+function unlock(){
+
+    const entered =
+        password.value
+        .trim()
+        .toLowerCase();
+
+
+    if(
+        correctPasswords.includes(entered)
+    ){
+
+        loginScreen.classList.add("hide");
+
+
+        setTimeout(function(){
+
+            loginScreen.style.display="none";
+
+            website.classList.add("show");
+
+            document.body.style.overflowY="auto";
+
+            startMusic();
+
+        },800);
+
+    }
+
+    else{
+
+        error.style.display="block";
+
+
+        password.animate(
+
+            [
+                {transform:"translateX(0)"},
+                {transform:"translateX(-8px)"},
+                {transform:"translateX(8px)"},
+                {transform:"translateX(0)"}
+            ],
+
+            {
+                duration:300
+            }
+
+        );
+
+    }
+
+}
+
+
+loginButton.addEventListener(
+    "click",
+    unlock
+);
+
+
+password.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key==="Enter"){
+
+            unlock();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+const photoUpload =
+    document.getElementById("photoUpload");
+
+
+photoUpload.addEventListener(
+    "change",
+    function(){
+
+        const files =
+            Array.from(this.files);
+
+
+        files.forEach(
+            function(file,index){
+
+                if(index >= 8) return;
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function(event){
+
+                        const image =
+                            event.target.result;
+
+
+                        /*
+                           Gallery photos
+                        */
+
+                        const gallery =
+                            document.getElementById(
+                                "gallery"+(index+1)
+                            );
+
+
+                        if(gallery){
+
+                            gallery.src=image;
+
+                        }
+
+
+                        /*
+                           Floating photos
+                        */
+
+                        if(index < 3){
+
+                            const floating =
+                                document.querySelector(
+                                    "#floating"+(index+1)+" img"
+                                );
+
+
+                            if(floating){
+
+                                floating.src=image;
+
+                            }
+
+                        }
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   MUSIC UPLOAD
+========================================================= */
+
+const songUpload =
+    document.getElementById("songUpload");
+
+const music =
+    document.getElementById("music");
+
+
+songUpload.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file) return;
+
+
+        const url =
+            URL.createObjectURL(file);
+
+
+        music.src=url;
+
+    }
+);
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+function startMusic(){
+
+    if(!music.src){
+
+        return;
+
+    }
+
+
+    music.play()
+    .then(function(){
+
+        musicButton.classList.add(
+            "playing"
+        );
+
+    })
+    .catch(function(){
+
+        console.log(
+            "Click the music button to play."
+        );
+
+    });
+
+}
+
+
+musicButton.addEventListener(
+    "click",
+    function(){
+
+        if(music.paused){
+
+            music.play();
+
+            musicButton.classList.add(
+                "playing"
+            );
+
+        }
+
+        else{
+
+            music.pause();
+
+            musicButton.classList.remove(
+                "playing"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SMOOTH SCROLL
+========================================================= */
+
+function goTo(id){
+
+    document
+        .getElementById(id)
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+document.body.style.overflow="hidden";
+
+</script>
+
+
+</body>
+</html>
