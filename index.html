@@ -2086,12 +2086,11 @@ A BIRTHDAY ADVENTURE MADE WITH LOVE
 
 
 <button
-class="press-start"
-onclick="showPassword()"
+    class="press-start"
+    id="pressStart"
+    type="button"
 >
-
-▶ PRESS START
-
+    ▶ PRESS START
 </button>
 
 
@@ -3284,11 +3283,29 @@ document.getElementById("musicButton");
 
 function showPassword(){
 
-    startScreen.style.display="none";
+    startScreen.style.display = "none";
 
-    passwordScreen.style.display="flex";
+    passwordScreen.style.display = "flex";
+
+    passwordScreen.style.opacity = "0";
+
+    passwordScreen.style.transition = "opacity 0.6s ease";
+
+    setTimeout(function(){
+
+        passwordScreen.style.opacity = "1";
+
+    }, 50);
 
 }
+
+   
+   
+document.getElementById("pressStart").addEventListener("click", function(){
+
+    showPassword();
+
+});
 
 
 /* =========================================================
