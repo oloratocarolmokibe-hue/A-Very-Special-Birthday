@@ -1,347 +1,683 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>The Thero Story ❤️</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>THERO.EXE ❤️</title>
+
 
 <style>
+
+/* =========================================================
+   THERO.EXE
+   ONE FILE BIRTHDAY GAME WEBSITE
+========================================================= */
+
+
+/* =========================================================
+   COLOUR PALETTE
+========================================================= */
+
+:root{
+
+    --cosmos:#4F1119;
+
+    --tumble:#E4A28B;
+
+    --blue:#62A9E0;
+
+    --greenblue:#1C73BC;
+
+    --cornflower:#234480;
+
+    --white:#FFF8F4;
+
+    --black:#10070A;
+
+    --dark:#180A0F;
+
+}
+
 
 /* =========================================================
    RESET
 ========================================================= */
 
 *{
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
 }
+
 
 html{
+
     scroll-behavior:smooth;
+
 }
+
 
 body{
-    background:#070607;
-    color:#f5eee5;
-    font-family:Arial,Helvetica,sans-serif;
+
+    background:var(--cosmos);
+
+    color:var(--white);
+
+    font-family:
+
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
     overflow-x:hidden;
+
 }
+
+
+button{
+
+    font-family:inherit;
+
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+body{
+
+    cursor:default;
+
+}
+
 
 button,
-input{
-    font-family:inherit;
+label{
+
+    cursor:pointer;
+
 }
 
 
 /* =========================================================
-   VARIABLES
+   PIXEL / GAME TEXT
 ========================================================= */
 
-:root{
-    --black:#070607;
-    --dark:#0e0b0d;
-    --cream:#f5eee5;
-    --gold:#d9b26f;
-    --pink:#b96a7d;
-    --grey:#aaa29a;
+.game-font{
+
+    font-family:
+
+        "Courier New",
+        monospace;
+
+    letter-spacing:2px;
+
 }
 
 
 /* =========================================================
-   LOGIN SCREEN
+   SCREEN SYSTEM
 ========================================================= */
 
-#loginScreen{
+.screen{
 
-    position:fixed;
-    inset:0;
+    min-height:100vh;
 
-    z-index:9999;
+    width:100%;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+.hidden{
+
+    display:none!important;
+
+}
+
+
+/* =========================================================
+   BACKGROUND PARTICLES
+========================================================= */
+
+.particle{
+
+    position:absolute;
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--tumble);
+
+    opacity:.65;
+
+    animation:
+
+        particleFloat
+        var(--duration)
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes particleFloat{
+
+    0%{
+
+        transform:
+
+            translateY(110vh)
+            translateX(0)
+            scale(.5);
+
+        opacity:0;
+
+    }
+
+    15%{
+
+        opacity:.8;
+
+    }
+
+    85%{
+
+        opacity:.8;
+
+    }
+
+    100%{
+
+        transform:
+
+            translateY(-20vh)
+            translateX(var(--drift))
+            scale(1.4);
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+#startScreen{
+
+    min-height:100vh;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     text-align:center;
 
-    overflow:hidden;
-
     background:
+
         radial-gradient(
-            circle at 20% 20%,
-            rgba(190,55,90,.28),
-            transparent 30%
+            circle at 50% 40%,
+            rgba(98,169,224,.35),
+            transparent 25%
         ),
 
         radial-gradient(
-            circle at 80% 80%,
-            rgba(217,178,111,.16),
+            circle at 20% 80%,
+            rgba(228,162,139,.25),
             transparent 30%
+        ),
+
+        var(--cosmos);
+
+}
+
+
+/* pixel grid */
+
+#startScreen::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.025)
+            1px,
+            transparent 1px
         ),
 
         linear-gradient(
-            135deg,
-            #050405,
-            #180b12,
-            #050505
+            90deg,
+            rgba(255,255,255,.025)
+            1px,
+            transparent 1px
         );
-}
 
+    background-size:40px 40px;
 
-#loginScreen.hide{
-    animation:loginDisappear 1s forwards;
-}
-
-
-@keyframes loginDisappear{
-
-    to{
-        opacity:0;
-        visibility:hidden;
-    }
+    animation:gridMove 10s linear infinite;
 
 }
 
 
-.login-container{
-
-    width:min(650px,90%);
-
-    animation:appear 1.3s ease;
-}
-
-
-@keyframes appear{
+@keyframes gridMove{
 
     from{
-        opacity:0;
-        transform:translateY(35px);
+
+        transform:translateY(0);
+
     }
 
     to{
-        opacity:1;
-        transform:translateY(0);
+
+        transform:translateY(40px);
+
     }
 
 }
 
 
-.small-title{
+.start-content{
 
-    color:var(--gold);
+    position:relative;
 
-    font-size:10px;
+    z-index:10;
 
-    letter-spacing:5px;
+    width:min(700px,90%);
 
-    margin-bottom:25px;
 }
 
 
-.login-container h1{
+.game-label{
 
-    font-family:Georgia,serif;
-
-    font-size:clamp(55px,11vw,120px);
-
-    line-height:.78;
-
-    font-weight:400;
-
-    letter-spacing:3px;
-}
-
-
-.login-container h1 span{
-
-    color:var(--gold);
-
-    font-style:italic;
-}
-
-
-.login-subtitle{
-
-    color:#c8c0b8;
-
-    margin:30px 0;
-
-    font-size:15px;
-}
-
-
-.login-box{
-
-    width:min(400px,100%);
-
-    margin:auto;
-
-    padding:35px;
-
-    background:rgba(10,8,10,.8);
-
-    border:1px solid rgba(217,178,111,.3);
-
-    backdrop-filter:blur(20px);
-
-    box-shadow:0 25px 80px #000;
-}
-
-
-.heart{
-
-    color:var(--gold);
-
-    font-size:30px;
-
-    margin-bottom:12px;
-}
-
-
-.login-box h3{
-
-    font-family:Georgia,serif;
-
-    letter-spacing:3px;
-
-    font-size:14px;
-}
-
-
-.login-box p{
-
-    color:#999;
+    color:var(--blue);
 
     font-size:12px;
 
-    margin:10px 0 20px;
+    font-weight:bold;
+
+    letter-spacing:5px;
+
+    margin-bottom:20px;
+
 }
 
 
-#password{
+.game-logo{
+
+    font-family:
+
+        Georgia,
+        serif;
+
+    font-size:
+
+        clamp(
+            65px,
+            14vw,
+            150px
+        );
+
+    line-height:.75;
+
+    text-shadow:
+
+        6px 6px 0 var(--cornflower),
+
+        0 0 40px
+        rgba(98,169,224,.4);
+
+}
+
+
+.game-logo span{
+
+    color:var(--tumble);
+
+    font-style:italic;
+
+}
+
+
+.game-subtitle{
+
+    margin:30px auto;
+
+    color:#f4c9ba;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+}
+
+
+.press-start{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:17px 35px;
+
+    background:var(--blue);
+
+    color:var(--cosmos);
+
+    border:4px solid var(--cornflower);
+
+    box-shadow:
+
+        8px 8px 0 var(--cornflower);
+
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+    transition:.2s;
+
+}
+
+
+.press-start:hover{
+
+    transform:
+
+        translate(
+            4px,
+            4px
+        );
+
+    box-shadow:
+
+        4px 4px 0 var(--cornflower);
+
+}
+
+
+.press-start:active{
+
+    transform:
+
+        translate(
+            8px,
+            8px
+        );
+
+    box-shadow:none;
+
+}
+
+
+.controller{
+
+    margin:45px auto 0;
+
+    width:130px;
+
+    height:70px;
+
+    border-radius:40px;
+
+    background:var(--blue);
+
+    border:4px solid var(--cornflower);
+
+    position:relative;
+
+    animation:
+
+        controllerFloat
+        3s
+        ease-in-out
+        infinite;
+
+}
+
+
+.controller::before{
+
+    content:"+";
+
+    position:absolute;
+
+    left:20px;
+
+    top:20px;
+
+    font-size:25px;
+
+    font-weight:bold;
+
+    color:var(--cosmos);
+
+}
+
+
+.controller::after{
+
+    content:"♥ ♥";
+
+    position:absolute;
+
+    right:17px;
+
+    top:20px;
+
+    font-size:15px;
+
+    color:var(--cosmos);
+
+}
+
+
+@keyframes controllerFloat{
+
+    50%{
+
+        transform:translateY(-12px)
+        rotate(2deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   PASSWORD SCREEN
+========================================================= */
+
+#passwordScreen{
+
+    min-height:100vh;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    background:var(--blue);
+
+    color:var(--cosmos);
+
+}
+
+
+.password-card{
+
+    width:min(520px,90%);
+
+    padding:45px;
+
+    background:var(--tumbleweed);
+
+    border:5px solid var(--cornflower);
+
+    box-shadow:
+
+        12px 12px 0 var(--cosmos);
+
+    animation:
+
+        cardIn
+        .7s
+        ease;
+
+}
+
+
+@keyframes cardIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            scale(.7)
+            rotate(-4deg);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            scale(1)
+            rotate(0);
+
+    }
+
+}
+
+
+.password-card .emoji{
+
+    font-size:70px;
+
+    animation:
+
+        bounce
+        1.5s
+        infinite;
+
+}
+
+
+@keyframes bounce{
+
+    50%{
+
+        transform:translateY(-15px);
+
+    }
+
+}
+
+
+.password-card h2{
+
+    font-family:Georgia,serif;
+
+    font-size:45px;
+
+    margin:15px 0;
+
+}
+
+
+.password-card p{
+
+    margin-bottom:20px;
+
+}
+
+
+#passwordInput{
 
     width:100%;
 
-    padding:15px;
+    padding:16px;
 
-    background:#080708;
+    border:3px solid var(--cornflower);
 
-    border:1px solid #403a35;
+    background:#fff8f4;
 
-    color:white;
+    color:var(--cosmos);
 
     outline:none;
 
     text-align:center;
 
-    margin-bottom:12px;
-}
+    font-weight:bold;
 
-
-#password:focus{
-
-    border-color:var(--gold);
+    font-size:16px;
 
 }
 
 
-#loginButton{
+#unlockButton{
 
     width:100%;
 
-    padding:15px;
+    padding:16px;
 
-    border:1px solid var(--gold);
+    margin-top:12px;
 
-    background:var(--gold);
+    background:var(--cosmos);
 
-    color:#111;
+    color:var(--tumble);
+
+    border:3px solid var(--cornflower);
 
     font-weight:bold;
 
     letter-spacing:2px;
 
-    cursor:pointer;
-
-    transition:.3s;
 }
 
 
-#loginButton:hover{
-
-    background:transparent;
-
-    color:var(--gold);
-}
-
-
-#error{
+#errorMessage{
 
     display:none;
-
-    color:#e78b9c;
-
-    font-size:12px;
 
     margin-top:12px;
-}
 
+    color:var(--cosmos);
 
-.hint{
-
-    color:#666;
-
-    font-size:11px;
-
-    margin-top:20px;
-}
-
-
-.credit{
-
-    color:#444;
-
-    font-size:9px;
-
-    letter-spacing:3px;
-
-    margin-top:40px;
-}
-
-
-/* =========================================================
-   PHOTO UPLOAD
-========================================================= */
-
-.upload-area{
-
-    margin-top:25px;
-
-    padding:15px;
-
-    border:1px dashed #4c4032;
-
-    color:#888;
-
-    font-size:11px;
-}
-
-
-.upload-area label{
-
-    color:var(--gold);
-
-    cursor:pointer;
-
-}
-
-
-.upload-area input{
-
-    display:none;
+    font-weight:bold;
 
 }
 
@@ -350,628 +686,891 @@ input{
    MAIN WEBSITE
 ========================================================= */
 
-#website{
+#game{
 
     display:none;
+
 }
 
 
-#website.show{
+#game.active{
 
     display:block;
 
-    animation:websiteAppear 1.5s ease;
+    animation:
+
+        gameAppear
+        1s
+        ease;
+
 }
 
 
-@keyframes websiteAppear{
+@keyframes gameAppear{
 
     from{
+
         opacity:0;
+
     }
 
     to{
+
         opacity:1;
+
     }
 
 }
 
 
 /* =========================================================
-   MUSIC BUTTON
+   HUD
 ========================================================= */
 
-#musicButton{
+.hud{
 
     position:fixed;
 
-    right:25px;
-    bottom:25px;
+    top:15px;
 
-    z-index:500;
+    left:15px;
 
-    width:52px;
-    height:52px;
+    right:15px;
 
-    border-radius:50%;
-
-    border:1px solid var(--gold);
-
-    background:#0b090a;
-
-    color:var(--gold);
-
-    font-size:22px;
-
-    cursor:pointer;
-
-    box-shadow:0 10px 40px #000;
-}
-
-
-#musicButton.playing{
-
-    animation:pulse 1.5s infinite;
-}
-
-
-@keyframes pulse{
-
-    50%{
-        box-shadow:
-        0 0 0 10px rgba(217,178,111,.08),
-        0 10px 40px #000;
-    }
-
-}
-
-
-/* =========================================================
-   NAV
-========================================================= */
-
-nav{
-
-    position:absolute;
-
-    top:0;
-    left:0;
-
-    width:100%;
-
-    z-index:20;
-
-    padding:28px 6vw;
+    z-index:1000;
 
     display:flex;
 
     justify-content:space-between;
 
-    border-bottom:1px solid rgba(255,255,255,.1);
+    align-items:center;
+
+    pointer-events:none;
+
 }
 
 
-.logo{
+.hud-box{
 
-    font-family:Georgia,serif;
+    background:rgba(79,17,25,.9);
 
-    font-size:18px;
+    border:2px solid var(--tumble);
+
+    padding:10px 15px;
+
+    box-shadow:
+
+        4px 4px 0
+        var(--cornflower);
+
 }
 
 
-.logo span{
+.player{
 
-    color:var(--gold);
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+
 }
 
 
-.nav-text{
+.player-icon{
 
-    color:#888;
+    width:35px;
 
-    font-size:9px;
+    height:35px;
 
-    letter-spacing:4px;
+    border-radius:50%;
+
+    background:var(--blue);
+
+    display:grid;
+
+    place-items:center;
+
+    color:var(--cosmos);
+
+}
+
+
+.hud small{
+
+    display:block;
+
+    color:var(--tumble);
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+}
+
+
+.hud strong{
+
+    font-size:11px;
+
+}
+
+
+/* XP BAR */
+
+.xp{
+
+    width:140px;
+
+    height:8px;
+
+    background:var(--cornflower);
+
+    margin-top:5px;
+
+}
+
+
+.xp span{
+
+    display:block;
+
+    height:100%;
+
+    width:88%;
+
+    background:var(--blue);
+
+    animation:
+
+        xpGlow
+        2s
+        infinite;
+
+}
+
+
+@keyframes xpGlow{
+
+    50%{
+
+        filter:brightness(1.4);
+
+    }
+
 }
 
 
 /* =========================================================
-   HERO
+   GAME NAV
 ========================================================= */
 
-.hero{
+.game-nav{
+
+    position:fixed;
+
+    bottom:15px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:1000;
+
+    background:var(--cosmos);
+
+    border:2px solid var(--tumble);
+
+    padding:8px;
+
+    display:flex;
+
+    gap:6px;
+
+}
+
+
+.game-nav button{
+
+    background:var(--cornflower);
+
+    color:white;
+
+    border:1px solid var(--blue);
+
+    padding:8px 12px;
+
+    font-size:9px;
+
+    letter-spacing:1px;
+
+}
+
+
+.game-nav button:hover{
+
+    background:var(--blue);
+
+    color:var(--cosmos);
+
+}
+
+
+/* =========================================================
+   HERO / LEVEL 1
+========================================================= */
+
+.level-one{
 
     min-height:100vh;
-
-    position:relative;
 
     display:flex;
 
     align-items:center;
 
-    padding:120px 9vw;
+    justify-content:center;
 
-    overflow:hidden;
+    text-align:center;
 
     background:
+
         radial-gradient(
-            circle at 80% 30%,
-            rgba(180,60,90,.18),
-            transparent 30%
+            circle at center,
+            rgba(28,115,188,.5),
+            transparent 35%
         ),
 
-        linear-gradient(
-            110deg,
-            #070607,
-            #120d10,
-            #070607
-        );
+        var(--cosmos);
+
+    position:relative;
+
 }
 
 
-.hero::after{
+.level-one::before{
 
-    content:"";
+    content:"LEVEL 01";
 
     position:absolute;
 
-    inset:0;
+    top:100px;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(5,4,5,.98),
-            rgba(5,4,5,.4),
-            rgba(5,4,5,.8)
-        );
+    left:8%;
 
-    pointer-events:none;
+    color:var(--tumble);
+
+    letter-spacing:4px;
+
+    font-family:monospace;
+
 }
 
 
-.hero-content{
+.level-content{
 
     position:relative;
 
     z-index:5;
 
-    max-width:700px;
 }
 
 
-.eyebrow{
-
-    color:var(--gold);
-
-    font-size:10px;
-
-    letter-spacing:4px;
-
-    text-transform:uppercase;
-}
-
-
-.hero h1{
+.level-title{
 
     font-family:Georgia,serif;
 
-    font-weight:400;
+    font-size:
 
-    font-size:clamp(60px,9vw,125px);
+        clamp(
+            55px,
+            10vw,
+            120px
+        );
 
     line-height:.8;
 
-    margin:25px 0;
+    text-shadow:
+
+        5px 5px 0
+        var(--cornflower);
+
 }
 
 
-.hero h1 i{
+.level-title .pink{
 
-    color:var(--gold);
+    color:var(--tumble);
+
 }
 
 
-.hero h1 span{
+.level-sub{
 
-    font-size:.55em;
+    margin:35px 0;
 
-    letter-spacing:10px;
-}
-
-
-.hero p{
-
-    color:#c8c0b9;
-
-    line-height:1.8;
-
-    font-size:15px;
-
-    margin-bottom:30px;
-}
-
-
-.gold-button{
-
-    padding:15px 25px;
-
-    background:var(--gold);
-
-    border:1px solid var(--gold);
-
-    color:#111;
-
-    font-weight:bold;
+    color:#f3c6b8;
 
     letter-spacing:2px;
 
-    cursor:pointer;
-
-    transition:.3s;
 }
 
 
-.gold-button:hover{
+.start-arrow{
 
-    background:transparent;
+    color:var(--blue);
 
-    color:var(--gold);
+    animation:
+
+        arrowBounce
+        1s
+        infinite;
+
+}
+
+
+@keyframes arrowBounce{
+
+    50%{
+
+        transform:translateY(10px);
+
+    }
+
 }
 
 
 /* =========================================================
-   FLOATING PHOTOS
+   FLOATING MEMORY CARDS
 ========================================================= */
 
-.floating-photo{
+.memory-card{
 
     position:absolute;
 
-    z-index:10;
+    width:170px;
 
-    width:180px;
+    background:#fff8f4;
 
-    background:#eee;
+    padding:8px 8px 15px;
 
-    padding:8px 8px 25px;
+    color:var(--cosmos);
 
-    box-shadow:0 20px 60px #000;
+    box-shadow:
 
-    color:#222;
+        0 20px 50px
+        rgba(0,0,0,.5);
 
-    animation:float 5s ease-in-out infinite;
+    animation:
+
+        memoryFloat
+        5s
+        ease-in-out
+        infinite;
+
 }
 
 
-.floating-photo img{
+.memory-card img{
 
     width:100%;
 
-    height:210px;
+    height:180px;
 
     object-fit:cover;
+
 }
 
 
-.floating-photo p{
-
-    color:#222;
-
-    text-align:center;
+.memory-card p{
 
     font-family:cursive;
 
-    margin:7px 0 0;
+    text-align:center;
 
-    font-size:12px;
+    margin-top:7px;
+
 }
 
 
-.photo1{
+.card-a{
 
-    right:12%;
+    left:7%;
 
-    top:17%;
+    top:25%;
+
+    transform:rotate(-9deg);
+
+}
+
+
+.card-b{
+
+    right:8%;
+
+    top:20%;
 
     transform:rotate(8deg);
-}
-
-
-.photo2{
-
-    right:25%;
-
-    bottom:13%;
-
-    transform:rotate(-7deg);
 
     animation-delay:-2s;
+
 }
 
 
-.photo3{
+.card-c{
 
-    right:4%;
+    right:18%;
 
-    bottom:24%;
+    bottom:12%;
 
-    transform:rotate(4deg);
+    transform:rotate(-5deg);
 
     animation-delay:-3s;
+
 }
 
 
-@keyframes float{
+@keyframes memoryFloat{
 
     0%,100%{
-        transform:translateY(0) rotate(4deg);
+
+        margin-top:0;
+
     }
 
     50%{
-        transform:translateY(-20px) rotate(7deg);
+
+        margin-top:-25px;
+
     }
 
 }
 
 
 /* =========================================================
-   INTRO
+   LEVEL 2
 ========================================================= */
 
-.intro{
+.level-two{
 
-    padding:130px 9vw;
+    min-height:100vh;
 
-    display:grid;
+    background:var(--tumble);
 
-    grid-template-columns:70px 1fr 1fr;
+    color:var(--cosmos);
 
-    gap:30px;
+    padding:130px 8vw;
 
-    border-bottom:1px solid #262126;
+    position:relative;
+
 }
 
 
-.intro h2{
+.level-two::after{
+
+    content:"LEVEL 02";
+
+    position:absolute;
+
+    top:100px;
+
+    right:8%;
+
+    font-family:monospace;
+
+    color:var(--cornflower);
+
+    letter-spacing:4px;
+
+}
+
+
+.level-heading{
+
+    max-width:800px;
+
+    margin:auto;
+
+    text-align:center;
+
+}
+
+
+.level-heading h2{
 
     font-family:Georgia,serif;
 
-    font-size:clamp(35px,5vw,65px);
+    font-size:
 
-    font-weight:400;
+        clamp(
+            45px,
+            7vw,
+            85px
+        );
 
-    line-height:1.05;
+    line-height:.9;
 
-    margin-top:20px;
+    margin:20px 0 60px;
+
 }
 
 
-.intro p{
+.quest-box{
 
-    color:#aaa;
+    max-width:900px;
 
-    line-height:2;
+    margin:auto;
 
-    align-self:end;
+    background:var(--cosmos);
+
+    color:white;
+
+    border:4px solid var(--cornflower);
+
+    padding:35px;
+
+    box-shadow:
+
+        10px 10px 0
+        var(--blue);
+
 }
 
 
-/* =========================================================
-   GALLERY
-========================================================= */
-
-.gallery{
-
-    padding:130px 9vw;
-
-    background:#0b090b;
-}
-
-
-.gallery-header{
+.quest-top{
 
     display:flex;
 
     justify-content:space-between;
 
-    align-items:end;
+    border-bottom:2px dashed var(--tumble);
 
-    margin-bottom:55px;
+    padding-bottom:15px;
+
+    margin-bottom:25px;
+
 }
 
 
-.gallery h2{
+.quest-text{
 
     font-family:Georgia,serif;
 
-    font-size:clamp(40px,5vw,65px);
+    font-size:20px;
 
-    font-weight:400;
+    line-height:1.8;
 
-    line-height:1;
 }
 
 
-.gallery-label{
+.quest-reward{
 
-    color:#777;
+    margin-top:30px;
 
-    font-size:9px;
+    display:flex;
 
-    letter-spacing:3px;
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.reward{
+
+    background:var(--blue);
+
+    color:var(--cosmos);
+
+    padding:10px 15px;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================================================
+   LEVEL 3 - PHOTO GALLERY
+========================================================= */
+
+.level-three{
+
+    min-height:100vh;
+
+    padding:130px 7vw;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--greenblue),
+            var(--cornflower)
+        );
+
+}
+
+
+.gallery-title{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+
+.gallery-title h2{
+
+    font-family:Georgia,serif;
+
+    font-size:
+
+        clamp(
+            45px,
+            7vw,
+            90px
+        );
+
 }
 
 
 .gallery-grid{
 
+    max-width:1100px;
+
+    margin:auto;
+
     display:grid;
 
     grid-template-columns:
-        1.3fr
-        .8fr
-        1fr;
 
-    gap:18px;
+        repeat(
+            4,
+            1fr
+        );
+
+    gap:25px;
+
 }
 
 
-.memory{
+.game-photo{
 
-    overflow:hidden;
+    background:var(--tumble);
+
+    padding:9px 9px 20px;
+
+    color:var(--cosmos);
+
+    box-shadow:
+
+        8px 8px 0
+        var(--cosmos);
+
+    transition:
+
+        transform .4s,
+        box-shadow .4s;
+
 }
 
 
-.memory img{
+.game-photo:nth-child(odd){
+
+    transform:rotate(-3deg);
+
+}
+
+
+.game-photo:nth-child(even){
+
+    transform:rotate(3deg);
+
+}
+
+
+.game-photo:hover{
+
+    transform:
+
+        translateY(-20px)
+        rotate(0deg)
+        scale(1.05);
+
+    box-shadow:
+
+        12px 20px 0
+        var(--cosmos);
+
+    z-index:5;
+
+}
+
+
+.game-photo img{
 
     width:100%;
 
-    height:360px;
+    height:250px;
 
     object-fit:cover;
 
-    display:block;
-
-    transition:.7s;
-
-    filter:saturate(.8);
 }
 
 
-.memory:hover img{
+.game-photo p{
 
-    transform:scale(1.07);
+    font-family:cursive;
 
-    filter:saturate(1);
-}
+    text-align:center;
 
+    padding-top:10px;
 
-.memory.large img{
-
-    height:570px;
-}
-
-
-.memory.tall img{
-
-    height:480px;
-}
-
-
-.memory.wide{
-
-    grid-column:2/4;
-}
-
-
-.memory.wide img{
-
-    height:390px;
-}
-
-
-.memory p{
-
-    color:#888;
-
-    font-size:10px;
-
-    text-transform:uppercase;
-
-    letter-spacing:2px;
-
-    padding:12px 0;
 }
 
 
 /* =========================================================
-   LETTER
+   LEVEL 4 - LOVE LETTER
 ========================================================= */
 
-.letter-section{
+.level-four{
 
-    background:#f0e8df;
+    background:
 
-    color:#211b1b;
+        radial-gradient(
+            circle at center,
+            rgba(228,162,139,.2),
+            transparent 40%
+        ),
 
-    padding:130px 9vw;
+        var(--cosmos);
+
+    padding:140px 8vw;
+
 }
 
 
-.letter-container{
+.letter-wrapper{
 
     max-width:850px;
 
     margin:auto;
+
 }
 
 
-.letter-section .eyebrow{
+.letter-header{
 
-    color:#92703b;
+    text-align:center;
+
+    margin-bottom:60px;
+
 }
 
 
-.letter-section h2{
+.letter-header h2{
 
     font-family:Georgia,serif;
 
-    font-size:clamp(45px,6vw,80px);
+    font-size:
 
-    font-weight:400;
+        clamp(
+            45px,
+            7vw,
+            85px
+        );
 
-    margin:20px 0 50px;
+    color:var(--tumble);
+
+    line-height:.9;
+
+    margin-top:20px;
+
 }
 
 
-.letter{
+.letter-paper{
+
+    background:#fff8f4;
+
+    color:var(--cosmos);
+
+    padding:
+
+        clamp(
+            30px,
+            7vw,
+            70px
+        );
+
+    border:5px solid var(--blue);
+
+    box-shadow:
+
+        15px 15px 0
+        var(--cornflower);
+
+    position:relative;
+
+}
+
+
+.letter-paper::before{
+
+    content:"♥";
+
+    position:absolute;
+
+    right:30px;
+
+    top:20px;
+
+    color:var(--tumble);
+
+    font-size:30px;
+
+}
+
+
+.letter-paper p{
 
     font-family:Georgia,serif;
 
     font-size:18px;
 
     line-height:2;
-}
-
-
-.letter p{
 
     margin-bottom:27px;
+
 }
 
 
-.letter strong{
+.letter-paper strong{
 
-    color:#805b2c;
+    color:var(--greenblue);
+
 }
 
 
 .signature{
 
-    color:#76572e;
+    color:var(--cosmos)!important;
 
-    font-size:21px;
+    font-size:23px!important;
 
-    margin-top:50px;
-}
+    font-family:cursive!important;
 
-
-.signature span{
-
-    font-family:cursive;
-
-    font-size:30px;
 }
 
 
 /* =========================================================
-   POEM
+   LEVEL 5 - POEM
 ========================================================= */
 
-.poem{
+.level-five{
 
-    padding:130px 9vw;
-
-    min-height:900px;
+    min-height:100vh;
 
     display:flex;
 
@@ -981,55 +1580,66 @@ nav{
 
     text-align:center;
 
-    background:
+    padding:100px 7vw;
 
-        radial-gradient(
-            circle at center,
-            rgba(150,40,70,.13),
-            transparent 45%
-        ),
+    background:var(--blue);
 
-        #100b0f;
+    color:var(--cosmos);
+
 }
 
 
-.poem h2{
+.poem-card{
+
+    max-width:750px;
+
+    padding:60px 40px;
+
+    border:5px solid var(--cosmos);
+
+    box-shadow:
+
+        15px 15px 0
+        var(--cornflower);
+
+    background:var(--tumble);
+
+}
+
+
+.poem-card h2{
 
     font-family:Georgia,serif;
 
     font-size:75px;
 
-    font-weight:400;
+    line-height:.8;
 
     margin:20px 0 45px;
+
 }
 
 
-.poem-text{
+.poem-card p{
 
     font-family:Georgia,serif;
 
     font-style:italic;
 
-    color:#d6cec5;
+    font-size:20px;
 
-    font-size:21px;
+    line-height:1.8;
 
-    line-height:1.9;
-}
+    margin-bottom:25px;
 
-
-.poem-text p{
-
-    margin-bottom:30px;
 }
 
 
 /* =========================================================
-   FINAL
+   FINAL LEVEL
 ========================================================= */
 
-.final{
+.final-level{
 
     min-height:100vh;
 
@@ -1046,13 +1656,46 @@ nav{
     overflow:hidden;
 
     background:
+
         radial-gradient(
             circle at center,
-            rgba(170,60,90,.22),
-            transparent 50%
+            rgba(98,169,224,.35),
+            transparent 30%
         ),
 
-        #080708;
+        var(--cosmos);
+
+}
+
+
+.final-level::before{
+
+    content:"♥";
+
+    position:absolute;
+
+    font-size:500px;
+
+    color:rgba(228,162,139,.04);
+
+    animation:
+
+        heartRotate
+        15s
+        linear
+        infinite;
+
+}
+
+
+@keyframes heartRotate{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
 }
 
 
@@ -1060,231 +1703,338 @@ nav{
 
     position:relative;
 
-    z-index:2;
+    z-index:5;
 
-    padding:50px;
 }
 
 
-.final h2{
+.final-content h2{
 
     font-family:Georgia,serif;
 
-    font-size:clamp(70px,10vw,140px);
+    font-size:
 
-    font-weight:400;
+        clamp(
+            60px,
+            11vw,
+            140px
+        );
 
-    line-height:.85;
+    line-height:.8;
 
-    margin:30px 0;
 }
 
 
-.final h2 i{
+.final-content h2 span{
 
-    color:var(--gold);
+    color:var(--tumble);
+
 }
 
 
-.final-description{
+.final-content p{
 
-    color:#aaa;
+    margin:35px auto;
 
-    font-size:15px;
+    max-width:600px;
+
+    color:#e8c6bb;
+
+    line-height:1.8;
+
 }
 
 
-.credits{
+.level-complete{
 
-    margin:60px auto;
+    display:inline-block;
 
-    display:grid;
+    padding:15px 25px;
 
-    gap:8px;
+    background:var(--blue);
 
-    max-width:500px;
+    color:var(--cosmos);
 
-    font-size:9px;
+    font-family:monospace;
 
-    color:#666;
+    font-weight:bold;
 
     letter-spacing:3px;
+
+    margin-bottom:30px;
+
 }
 
 
-.credits strong{
+.final-heart{
 
-    color:#cfc7bd;
+    font-size:70px;
 
-    font-size:11px;
+    animation:
 
-    margin-bottom:15px;
+        heartBeat
+        1.2s
+        infinite;
+
 }
 
 
-.final h3{
+@keyframes heartBeat{
 
-    color:var(--gold);
+    50%{
 
-    font-family:Georgia,serif;
+        transform:scale(1.25);
 
-    letter-spacing:3px;
+    }
+
 }
 
 
 /* =========================================================
-   FOOTER
+   MUSIC
 ========================================================= */
 
-footer{
+.music-button{
 
-    padding:25px 6vw;
+    position:fixed;
 
-    display:flex;
+    right:20px;
 
-    justify-content:space-between;
+    bottom:75px;
 
-    color:#555;
+    z-index:1500;
 
-    font-size:9px;
+    width:48px;
 
-    letter-spacing:3px;
+    height:48px;
 
-    background:#070607;
+    border-radius:50%;
+
+    border:3px solid var(--tumble);
+
+    background:var(--cosmos);
+
+    color:var(--blue);
+
+    font-size:20px;
+
+}
+
+
+.music-button.playing{
+
+    animation:
+
+        musicPulse
+        1s
+        infinite;
+
+}
+
+
+@keyframes musicPulse{
+
+    50%{
+
+        transform:scale(1.1);
+
+    }
+
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   MOBILE
 ========================================================= */
 
 @media(max-width:800px){
 
-    .nav-text{
+    .hud{
+
+        left:8px;
+
+        right:8px;
+
+    }
+
+
+    .hud-box{
+
+        padding:7px;
+
+    }
+
+
+    .xp{
+
+        width:90px;
+
+    }
+
+
+    .game-nav{
+
+        width:94%;
+
+        justify-content:center;
+
+    }
+
+
+    .game-nav button{
+
+        padding:7px;
+
+        font-size:7px;
+
+    }
+
+
+    .memory-card{
 
         display:none;
+
     }
 
 
-    .hero{
+    .level-two,
+    .level-three,
+    .level-four{
 
-        padding:120px 7vw;
+        padding-left:6vw;
+
+        padding-right:6vw;
+
     }
 
 
-    .hero h1{
+    .quest-box{
 
-        font-size:60px;
+        padding:22px;
+
     }
 
 
-    .floating-photo{
+    .quest-text{
 
-        display:none;
-    }
+        font-size:16px;
 
-
-    .intro{
-
-        grid-template-columns:45px 1fr;
-
-        padding:80px 7vw;
-    }
-
-
-    .intro p{
-
-        grid-column:2;
-
-        margin-top:25px;
-    }
-
-
-    .gallery{
-
-        padding:80px 7vw;
-    }
-
-
-    .gallery-header{
-
-        display:block;
-    }
-
-
-    .gallery-label{
-
-        margin-top:20px;
     }
 
 
     .gallery-grid{
 
         grid-template-columns:1fr 1fr;
+
+        gap:15px;
+
     }
 
 
-    .memory.large{
+    .game-photo img{
 
-        grid-column:1/3;
+        height:180px;
+
     }
 
 
-    .memory.large img{
+    .game-photo{
 
-        height:400px;
+        padding:6px 6px 12px;
+
     }
 
 
-    .memory img{
+    .game-photo p{
 
-        height:280px;
+        font-size:11px;
+
     }
 
 
-    .memory.wide{
-
-        grid-column:1/3;
-    }
-
-
-    .letter-section{
-
-        padding:80px 7vw;
-    }
-
-
-    .letter{
+    .letter-paper p{
 
         font-size:16px;
 
-        line-height:1.85;
     }
 
 
-    .poem{
+    .poem-card{
 
-        padding:80px 7vw;
+        padding:40px 25px;
+
     }
 
 
-    .poem h2{
+    .poem-card h2{
 
         font-size:55px;
+
     }
 
 
-    .poem-text{
+}
 
-        font-size:18px;
+
+/* =========================================================
+   EXTRA ANIMATIONS
+========================================================= */
+
+.shake{
+
+    animation:
+
+        shake
+        .4s;
+
+}
+
+
+@keyframes shake{
+
+    25%{
+
+        transform:translateX(-8px);
+
     }
 
+    50%{
 
-    footer{
+        transform:translateX(8px);
 
-        display:block;
+    }
 
-        line-height:2.5;
+    75%{
+
+        transform:translateX(-5px);
+
+    }
+
+}
+
+
+/* glowing text */
+
+.glow{
+
+    animation:
+
+        textGlow
+        2s
+        infinite;
+
+}
+
+
+@keyframes textGlow{
+
+    50%{
+
+        text-shadow:
+
+            0 0 15px
+            var(--blue);
+
     }
 
 }
@@ -1298,1126 +2048,1330 @@ footer{
 
 
 <!-- =====================================================
-     PASSWORD SCREEN
+     START SCREEN
 ===================================================== -->
 
-<div id="loginScreen">
-
-    <div class="login-container">
-
-        <div class="small-title">
-            A SPECIAL PRESENTATION
-        </div>
+<section
+id="startScreen"
+class="screen"
+>
 
 
-        <h1>
-
-            THE
-
-            <br>
-
-            <span>THERO</span>
-
-            <br>
-
-            STORY
-
-        </h1>
+<div class="start-content">
 
 
-        <p class="login-subtitle">
+<div class="game-label game-font">
 
-            A birthday movie made especially
-            for my favourite person.
-
-        </p>
-
-
-        <div class="login-box">
-
-            <div class="heart">
-                ♥
-            </div>
-
-
-            <h3>
-                PRIVATE SCREENING
-            </h3>
-
-
-            <p>
-                Enter the secret password to continue.
-            </p>
-
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Our secret..."
-            >
-
-
-            <button id="loginButton">
-
-                WATCH THE MOVIE
-
-                <span>→</span>
-
-            </button>
-
-
-            <div id="error">
-                That's not it, Baby... try again ♥
-            </div>
-
-
-            <div class="upload-area">
-
-                Your photos can be added directly
-                from this page.
-
-                <br><br>
-
-                <label for="photoUpload">
-
-                    📸 SELECT OUR PHOTOS
-
-                </label>
-
-                <input
-                    id="photoUpload"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                >
-
-            </div>
-
-
-            <div class="upload-area">
-
-                <label for="songUpload">
-
-                    🎵 SELECT OUR SONG
-
-                </label>
-
-                <input
-                    id="songUpload"
-                    type="file"
-                    accept="audio/*"
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="hint">
-
-            Hint: try <b>baby</b>, <b>spiderman</b>,
-            <b>love</b> or <b>thero</b>.
-
-        </div>
-
-
-        <div class="credit">
-
-            FOR THERO • MADE WITH LOVE
-
-        </div>
-
-    </div>
+♥ PLAYER 1 • SPECIAL EDITION ♥
 
 </div>
 
 
+<div class="game-logo">
+
+THERO
+
+<br>
+
+<span>STORY</span>
+
+</div>
+
+
+<div class="game-subtitle">
+
+A BIRTHDAY ADVENTURE MADE WITH LOVE
+
+</div>
+
+
+<button
+class="press-start"
+onclick="showPassword()"
+>
+
+▶ PRESS START
+
+</button>
+
+
+<div class="controller"></div>
+
+
+<div class="game-font"
+style="
+margin-top:25px;
+font-size:9px;
+color:#E4A28B;
+">
+
+INSERT LOVE TO CONTINUE...
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
 
 <!-- =====================================================
-     WEBSITE
+     PASSWORD SCREEN
 ===================================================== -->
 
-<div id="website">
+<section
+id="passwordScreen"
+class="screen"
+>
+
+
+<div class="password-card">
+
+
+<div class="emoji">
+
+🎮
+
+</div>
+
+
+<h2>
+
+HEY BABY!
+
+</h2>
+
+
+<p>
+
+WOULD YOU LIKE TO SEE YOUR BIRTHDAY GIFT?
+
+</p>
+
+
+<input
+id="passwordInput"
+type="password"
+placeholder="ENTER SECRET CODE"
+>
+
+
+<button
+id="unlockButton"
+onclick="unlockGame()"
+>
+
+♥ UNLOCK MY LOVE ♥
+
+</button>
+
+
+<div id="errorMessage">
+
+NOPE! TRY AGAIN BABY 😭❤️
+
+</div>
+
+
+<p
+style="
+margin-top:20px;
+font-size:10px;
+"
+>
+
+Hint: SPIDERMAN 👀
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN GAME
+===================================================== -->
+
+<main id="game">
+
+
+<!-- HUD -->
+
+<div class="hud">
+
+
+<div class="hud-box player">
+
+
+<div class="player-icon">
+
+♥
+
+</div>
+
+
+<div>
+
+<small>PLAYER</small>
+
+<strong>THERO</strong>
+
+<div class="xp">
+
+<span></span>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="hud-box">
+
+<small>MISSION</small>
+
+<strong>
+
+MAKE THERO SMILE ❤️
+
+</strong>
+
+</div>
+
+
+</div>
+
 
 
 <!-- MUSIC -->
 
 <audio
-    id="music"
-    loop
+id="music"
+loop
 ></audio>
 
 
 <button
-    id="musicButton"
+class="music-button"
+id="musicButton"
+onclick="toggleMusic()"
 >
-    ♫
+
+♫
+
 </button>
 
 
 
 <!-- =====================================================
-     HERO
-===================================================== -->
-
-<header class="hero">
-
-
-    <nav>
-
-        <div class="logo">
-
-            T <span>♥</span> T
-
-        </div>
-
-
-        <div class="nav-text">
-
-            A FILM ABOUT US
-
-        </div>
-
-    </nav>
-
-
-    <div class="hero-content">
-
-
-        <div class="eyebrow">
-
-            NOW PLAYING • YOUR SPECIAL DAY
-
-        </div>
-
-
-        <h1>
-
-            HAPPY
-
-            <br>
-
-            <i>BIRTHDAY</i>
-
-            <br>
-
-            <span>THERO</span>
-
-        </h1>
-
-
-        <p>
-
-            To my Baby.
-            My Big Daddy.
-            My Spiderman.
-
-            <br>
-
-            My favourite person
-            in the whole story.
-
-        </p>
-
-
-        <button
-            class="gold-button"
-            onclick="goTo('letter')"
-        >
-
-            BEGIN OUR STORY ↓
-
-        </button>
-
-
-    </div>
-
-
-    <!-- PHOTOS -->
-
-    <div
-        class="floating-photo photo1"
-        id="floating1"
-    >
-
-        <img>
-
-        <p>
-            my favourite smile
-        </p>
-
-    </div>
-
-
-    <div
-        class="floating-photo photo2"
-        id="floating2"
-    >
-
-        <img>
-
-        <p>
-            my Spiderman ♥
-        </p>
-
-    </div>
-
-
-    <div
-        class="floating-photo photo3"
-        id="floating3"
-    >
-
-        <img>
-
-        <p>
-            us
-        </p>
-
-    </div>
-
-
-</header>
-
-
-
-<!-- =====================================================
-     INTRO
-===================================================== -->
-
-<section class="intro">
-
-
-    <div class="eyebrow">
-        01
-    </div>
-
-
-    <div>
-
-        <div class="eyebrow">
-            THE PREMISE
-        </div>
-
-
-        <h2>
-
-            Every great love story
-            <br>
-
-            has a favourite character.
-
-        </h2>
-
-    </div>
-
-
-    <p>
-
-        Mine is you, Thero.
-
-        This little website is my way of
-        turning your birthday into a movie
-        because you deserve a day that feels
-        different, special, intentional and
-        completely yours.
-
-    </p>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     GALLERY
-===================================================== -->
-
-<section class="gallery">
-
-
-    <div class="gallery-header">
-
-
-        <div>
-
-            <div class="eyebrow">
-                SCENES FROM US
-            </div>
-
-
-            <h2>
-
-                Moments I'd
-                <br>
-
-                rewatch forever.
-
-            </h2>
-
-        </div>
-
-
-        <div class="gallery-label">
-
-            ♥ PLAYING IN MY HEART
-
-        </div>
-
-
-    </div>
-
-
-    <div class="gallery-grid">
-
-
-        <div class="memory large">
-
-            <img id="gallery1">
-
-            <p>
-                Scene I — My Baby
-            </p>
-
-        </div>
-
-
-        <div class="memory tall">
-
-            <img id="gallery2">
-
-            <p>
-                Scene II — My Big Daddy
-            </p>
-
-        </div>
-
-
-        <div class="memory">
-
-            <img id="gallery3">
-
-            <p>
-                Scene III — Just us
-            </p>
-
-        </div>
-
-
-        <div class="memory">
-
-            <img id="gallery4">
-
-            <p>
-                Scene IV — My Spiderman
-            </p>
-
-        </div>
-
-
-        <div class="memory wide">
-
-            <img id="gallery5">
-
-            <p>
-                Scene V — A memory worth keeping
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     LETTER
+     LEVEL 1
 ===================================================== -->
 
 <section
-    class="letter-section"
-    id="letter"
+id="level1"
+class="level-one screen"
 >
 
 
-    <div class="letter-container">
+<div
+class="particle"
+style="
+left:10%;
+--duration:8s;
+--drift:50px;
+"
+></div>
 
 
-        <div class="eyebrow">
-            02 • A LETTER FOR YOU
-        </div>
+<div
+class="particle"
+style="
+left:30%;
+--duration:11s;
+--drift:-40px;
+"
+></div>
 
 
-        <h2>
-            My Baby, Thero...
-        </h2>
+<div
+class="particle"
+style="
+left:70%;
+--duration:9s;
+--drift:60px;
+"
+></div>
 
 
-        <div class="letter">
+<div
+class="particle"
+style="
+left:90%;
+--duration:12s;
+--drift:-60px;
+"
+></div>
 
 
-            <p>
 
-                Happy birthday to my Baby, my Big Daddy,
-                my Spiderman, and one of the most beautiful
-                parts of my life.
+<!-- FLOATING PHOTOS -->
 
-            </p>
 
+<div class="memory-card card-a">
 
-            <p>
+<img id="float1">
 
-                Today is about celebrating you — the person
-                you are, the person you are becoming, your
-                dreams, your heart, your smile, your strength,
-                your softness, and even all the little things
-                you do that you probably don't realise I notice.
+<p>my Baby ♥</p>
 
-                I hope you wake up today knowing just how
-                loved you are. I hope you feel special,
-                appreciated, wanted and celebrated, because
-                you deserve every bit of it.
+</div>
 
-            </p>
 
+<div class="memory-card card-b">
 
-            <p>
+<img id="float2">
 
-                I hope you have the most amazing birthday,
-                Baby. I hope today gives you reasons to smile
-                until your cheeks hurt. I hope you laugh,
-                eat your favourite food, enjoy every little
-                surprise and allow yourself to be spoiled.
+<p>my Spiderman 🕷️</p>
 
-                But most importantly, I hope you remember
-                that your birthday is not just a celebration
-                of another year.
+</div>
 
-                It is a celebration of the fact that the world
-                got you — and somehow, I got lucky enough
-                to have you in my life.
 
-            </p>
+<div class="memory-card card-c">
 
+<img id="float3">
 
-            <p>
+<p>my Big Daddy</p>
 
-                I want you to know something:
+</div>
 
-                <strong>
-                    your birthdays will never be
-                    ordinary again.
-                </strong>
 
-            </p>
 
+<div class="level-content">
 
-            <p>
 
-                Not while I am here.
+<div class="game-label game-font">
 
-                Every birthday we get to share is going to
-                be magical, thoughtful and full of little
-                pieces of our story.
+LEVEL 01 • THE MAIN CHARACTER
 
-                I want every year to have its own memory.
+</div>
 
-                I want photographs we can look back at,
-                jokes only we understand, adventures we
-                never planned, food we absolutely over-order,
-                and moments that make us stop and think,
 
-                "Wow, look how far we've come."
+<h1 class="level-title">
 
-            </p>
+HAPPY
 
+<br>
 
-            <p>
+<span class="pink">
 
-                I want to celebrate every version of you.
+BIRTHDAY
 
-                The happy you.
+</span>
 
-                The tired you.
+<br>
 
-                The ambitious you.
+THERO
 
-                The silly you.
+</h1>
 
-                The stubborn you.
 
-                The quiet you.
+<p class="level-sub">
 
-                The Big Daddy you.
+TODAY'S QUEST:
 
-                The Spiderman you.
+MAKE THE MAIN CHARACTER FEEL LOVED.
 
-                All of you.
+</p>
 
-            </p>
 
+<div class="start-arrow">
 
-            <p>
+▼
 
-                I want to be there for the chapters nobody
-                else sees and cheer the loudest when you
-                accomplish the things you've been working
-                toward.
+<br>
 
-            </p>
+SCROLL TO START ADVENTURE
 
-
-            <p>
-
-                Thank you for every memory we already have.
-
-                Thank you for every conversation,
-                every laugh, every hug, every random moment,
-                every look, every silly thing that somehow
-                became a memory I treasure.
-
-                Thank you for being someone I can love,
-                annoy, laugh with and make beautiful
-                memories with.
-
-            </p>
-
-
-            <p>
-
-                I hope this next chapter of your life is
-                kind to you.
-
-                I hope it brings opportunities that make
-                you proud, people who genuinely love you,
-                peace when you need it, courage when things
-                get hard, and happiness that stays long after
-                your birthday candles disappear.
-
-            </p>
-
-
-            <p>
-
-                And when another birthday comes around,
-                I hope we are still here — older, wiser,
-                probably still being ridiculous, but still
-                choosing each other.
-
-            </p>
-
-
-            <p>
-
-                I hope we look at this website and laugh
-                at how everything started.
-
-                I hope we have hundreds more photographs
-                to add, hundreds more memories to make,
-                and a lifetime of birthdays to celebrate.
-
-            </p>
-
-
-            <p>
-
-                So happy birthday, my Baby.
-
-                <br>
-
-                My Big Daddy.
-
-                <br>
-
-                My Spiderman.
-
-                <br>
-
-                My favourite person.
-
-            </p>
-
-
-            <p class="signature">
-
-                I love you more than this little movie
-                could ever explain.
-
-                <br><br>
-
-                <span>
-                    Forever yours ♥
-                </span>
-
-            </p>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     POEM
-===================================================== -->
-
-<section class="poem">
-
-
-    <div>
-
-        <div class="eyebrow">
-            03 • A LITTLE POEM
-        </div>
-
-
-        <h2>
-            For Thero
-        </h2>
-
-
-        <div class="poem-text">
-
-
-            <p>
-
-                Some people are chapters,
-
-                <br>
-
-                some are stories,
-
-                <br>
-
-                but you, my love,
-
-                <br>
-
-                feel like the whole movie.
-
-            </p>
-
-
-            <p>
-
-                Every laugh is a scene,
-
-                <br>
-
-                every hug is a home,
-
-                <br>
-
-                every birthday together
-
-                <br>
-
-                is another reason I know—
-
-            </p>
-
-
-            <p>
-
-                That ordinary days
-
-                <br>
-
-                can become something bright,
-
-                <br>
-
-                when I'm beside you,
-
-                <br>
-
-                everything feels right.
-
-            </p>
-
-
-            <p>
-
-                So here's to your birthday,
-
-                <br>
-
-                and all those to come,
-
-                <br>
-
-                to every new memory,
-
-                <br>
-
-                and every new sun.
-
-            </p>
-
-
-            <p>
-
-                My Baby, my Big Daddy,
-
-                <br>
-
-                my Spiderman too—
-
-                <br>
-
-                if I could choose again,
-
-                <br>
-
-                I'd still choose you.
-
-            </p>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     FINAL SCENE
-===================================================== -->
-
-<section class="final">
-
-
-    <div class="final-content">
-
-
-        <div class="eyebrow">
-
-            THE END...
-
-            <br><br>
-
-            OR JUST THE BEGINNING?
-
-        </div>
-
-
-        <h2>
-
-            TO BE
-
-            <br>
-
-            <i>CONTINUED.</i>
-
-        </h2>
-
-
-        <p class="final-description">
-
-            Because our story has so many more
-            birthdays to celebrate.
-
-        </p>
-
-
-        <div class="credits">
-
-
-            <span>
-                STARRING
-            </span>
-
-            <strong>
-                THERO
-            </strong>
-
-
-            <span>
-                CO-STARRING
-            </span>
-
-            <strong>
-                THE GIRL WHO LOVES HIM VERY MUCH
-            </strong>
-
-
-            <span>
-                GENRE
-            </span>
-
-            <strong>
-                LOVE • COMEDY • FOREVER
-            </strong>
-
-
-        </div>
-
-
-        <h3>
-
-            HAPPY BIRTHDAY, BABY ♥
-
-        </h3>
-
-
-    </div>
-
-</section>
-
-
-
-<footer>
-
-    <span>
-        THE THERO STORY
-    </span>
-
-
-    <span>
-        MADE WITH LOVE • FOREVER & ALWAYS
-    </span>
-
-</footer>
+</div>
 
 
 </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     LEVEL 2
+===================================================== -->
+
+<section
+id="level2"
+class="level-two screen"
+>
+
+
+<div class="level-heading">
+
+
+<div class="game-label game-font">
+
+LEVEL 02 • QUEST UNLOCKED
+
+</div>
+
+
+<h2>
+
+THE MOST IMPORTANT
+<br>
+
+MISSION
+
+</h2>
+
+
+</div>
+
+
+
+<div class="quest-box">
+
+
+<div class="quest-top">
+
+<span class="game-font">
+
+QUEST: THERO'S BIRTHDAY
+
+</span>
+
+<span class="game-font">
+
+♥ +1000 XP
+
+</span>
+
+</div>
+
+
+<div class="quest-text">
+
+
+<p>
+
+Your mission is simple:
+
+make sure my Baby knows just how loved
+he is today.
+
+</p>
+
+
+<br>
+
+
+<p>
+
+You have successfully unlocked:
+
+a whole birthday made especially for you.
+
+</p>
+
+
+<br>
+
+
+<p>
+
+Your birthday is not allowed to be
+an ordinary day anymore.
+
+Every birthday we share will be
+thought out, magical and filled with
+memories that belong only to us.
+
+</p>
+
+
+<br>
+
+
+<p>
+
+Because if I get to be part of your
+story, I'm going to make sure every
+chapter is worth remembering.
+
+</p>
+
+
+</div>
+
+
+<div class="quest-reward">
+
+
+<div class="reward">
+
+♥ LOVE +999
+
+</div>
+
+
+<div class="reward">
+
+🎮 HAPPINESS +999
+
+</div>
+
+
+<div class="reward">
+
+🕷️ SPIDERMAN ENERGY +500
+
+</div>
+
+
+<div class="reward">
+
+✨ MAGIC UNLOCKED
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     LEVEL 3 PHOTO GALLERY
+===================================================== -->
+
+<section
+id="level3"
+class="level-three screen"
+>
+
+
+<div class="gallery-title">
+
+
+<div class="game-label game-font">
+
+LEVEL 03 • MEMORY INVENTORY
+
+</div>
+
+
+<h2>
+
+OUR COLLECTED
+<br>
+
+MEMORIES
+
+</h2>
+
+
+<p
+style="
+margin-top:20px;
+"
+>
+
+Every picture is another little
+piece of our story.
+
+</p>
+
+
+</div>
+
+
+
+<div class="gallery-grid">
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczMGxbGOdkAGZ--RXiiBogBUD7HIDE6NlheueC6eInMLsZeCFoC6sQDTPQ=s0-d-I?authuser=1">
+
+<p>MEMORY #001 ♥</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczP3tZGAXr0vlCuRU_xbzWuz--LV7VJAPDbCDRE1i0rgDjNFS42Uyfg5Bw=s0-d-I?authuser=1">
+
+<p>MEMORY #002</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczPlneSRqzR0ZgXNAe1qBzYuJxtd4Xjs8WdXNaoRskwwZSjB-827a8fJZQ=s0-d-I?authuser=1">
+
+<p>MEMORY #003</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczMl6dXXgRqCVA35cTJrjPzEZ5780dkJ1U-cYxdaGN8G1OlGx1YTqZ_q-w=s0-d-I?authuser=1">
+
+<p>MEMORY #004</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczN3208TlbBLBzwMS3ylGNrF4s8RsUIAwMLlnh-gJi-RyLC6CncidZaXxg=s0-d-I?authuser=1">
+
+<p>MEMORY #005</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczPlneSRqzR0ZgXNAe1qBzYuJxtd4Xjs8WdXNaoRskwwZSjB-827a8fJZQ=s0-d-I?authuser=1">
+
+<p>MEMORY #006</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczN3208TlbBLBzwMS3ylGNrF4s8RsUIAwMLlnh-gJi-RyLC6CncidZaXxg=s0-d-I?authuser=1">
+
+<p>MEMORY #007</p>
+
+</div>
+
+
+<div class="game-photo">
+
+<img id="https://photos.fife.usercontent.google.com/pw/AP1GczOtdTsWKgDkmPsgFp3AxfNoH8ZEJxeiTi9sHLeJuDUnIYPPhjxGGICiAw=s0-d-I?authuser=1">
+
+<p>MEMORY #008 ♥</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     LEVEL 4 LETTER
+===================================================== -->
+
+<section
+id="level4"
+class="level-four screen"
+>
+
+
+<div class="letter-wrapper">
+
+
+<div class="letter-header">
+
+
+<div class="game-label game-font">
+
+LEVEL 04 • SECRET MESSAGE UNLOCKED
+
+</div>
+
+
+<h2>
+
+DEAR BABY...
+
+</h2>
+
+
+</div>
+
+
+
+<div class="letter-paper">
+
+
+<p>
+
+Happy birthday to my Baby, my Big Daddy,
+my Spiderman, and one of the most beautiful
+parts of my life.
+
+</p>
+
+
+<p>
+
+Today is about celebrating you — the person
+you are, the person you are becoming, your
+dreams, your heart, your smile, your strength,
+your softness, and all the little things you do
+that you probably don't realise I notice.
+
+I hope you wake up today knowing just how
+loved you are.
+
+I hope you feel special, appreciated,
+wanted and celebrated, because you deserve
+every bit of it.
+
+</p>
+
+
+<p>
+
+I hope you have the most amazing birthday,
+Baby.
+
+I hope today gives you reasons to smile
+until your cheeks hurt.
+
+I hope you laugh, eat your favourite food,
+enjoy every little surprise and allow yourself
+to be spoiled.
+
+But most importantly, I hope you remember
+that your birthday is not just a celebration
+of another year.
+
+It is a celebration of the fact that the world
+got you — and somehow, I got lucky enough
+to have you in my life.
+
+</p>
+
+
+<p>
+
+And I want you to know something:
+
+<strong>
+
+your birthdays will never be
+ordinary again.
+
+</strong>
+
+</p>
+
+
+<p>
+
+Not while I am here.
+
+Every birthday we get to share is going to
+be magical, thoughtful and full of little
+pieces of our story.
+
+I want every year to have its own memory.
+
+I want photographs we can look back at,
+jokes only we understand, adventures we
+never planned, random moments that become
+special simply because we experienced them
+together.
+
+</p>
+
+
+<p>
+
+I want to celebrate every version of you.
+
+The happy you.
+
+The tired you.
+
+The ambitious you.
+
+The silly you.
+
+The stubborn you.
+
+The quiet you.
+
+The Big Daddy you.
+
+The Spiderman you.
+
+All of you.
+
+</p>
+
+
+<p>
+
+I want to be there for the chapters nobody
+else sees.
+
+I want to cheer the loudest when you
+accomplish the things you've been working
+toward.
+
+I want to see you win.
+
+I want to see you become everything you
+dream of becoming.
+
+</p>
+
+
+<p>
+
+Thank you for every memory we already have.
+
+Thank you for every conversation,
+every laugh, every hug, every random moment,
+every look, every silly thing that somehow
+became a memory I treasure.
+
+Thank you for being someone I can love,
+annoy, laugh with and make beautiful
+memories with.
+
+</p>
+
+
+<p>
+
+I hope this next chapter of your life is kind
+to you.
+
+I hope it brings opportunities that make
+you proud.
+
+I hope it brings peace when you need it,
+courage when things get hard, and happiness
+that stays long after your birthday candles
+disappear.
+
+</p>
+
+
+<p>
+
+And when another birthday comes around,
+I hope we are still here.
+
+Older.
+
+Wiser.
+
+Probably still ridiculous.
+
+But still choosing each other.
+
+</p>
+
+
+<p>
+
+I hope one day we look back at this little
+website and laugh.
+
+I hope we have hundreds more photographs
+to add.
+
+Hundreds more memories.
+
+Hundreds more adventures.
+
+And a lifetime of birthdays to celebrate.
+
+</p>
+
+
+<p>
+
+So happy birthday, my Baby.
+
+<br>
+
+My Big Daddy.
+
+<br>
+
+My Spiderman.
+
+<br>
+
+My favourite person.
+
+</p>
+
+
+<p class="signature">
+
+I love you more than this little game
+could ever explain.
+
+<br><br>
+
+Forever yours,
+
+<br>
+
+♥
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     LEVEL 5 POEM
+===================================================== -->
+
+<section
+id="level5"
+class="level-five screen"
+>
+
+
+<div class="poem-card">
+
+
+<div class="game-label game-font">
+
+LEVEL 05 • LOVE DLC
+
+</div>
+
+
+<h2>
+
+FOR<br>
+
+THERO
+
+</h2>
+
+
+<p>
+
+Some people are chapters,
+
+<br>
+
+some are stories,
+
+<br>
+
+but you, my love,
+
+<br>
+
+feel like the whole movie.
+
+</p>
+
+
+<p>
+
+Every laugh is a scene,
+
+<br>
+
+every hug is a home,
+
+<br>
+
+every birthday together
+
+<br>
+
+is another reason I know—
+
+</p>
+
+
+<p>
+
+That ordinary days
+
+<br>
+
+can become something bright,
+
+<br>
+
+when I'm beside you,
+
+<br>
+
+everything feels right.
+
+</p>
+
+
+<p>
+
+So here's to your birthday,
+
+<br>
+
+and all those to come,
+
+<br>
+
+to every new memory,
+
+<br>
+
+and every new sun.
+
+</p>
+
+
+<p>
+
+My Baby, my Big Daddy,
+
+<br>
+
+my Spiderman too—
+
+<br>
+
+if I could choose again,
+
+<br>
+
+I'd still choose you.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL LEVEL
+===================================================== -->
+
+<section
+id="final"
+class="final-level screen"
+>
+
+
+<div class="final-content">
+
+
+<div class="level-complete">
+
+♥ MISSION COMPLETE ♥
+
+</div>
+
+
+<div class="final-heart">
+
+♥
+
+</div>
+
+
+<h2>
+
+HAPPY
+
+<br>
+
+<span>BIRTHDAY</span>
+
+<br>
+
+BABY
+
+</h2>
+
+
+<p>
+
+Congratulations, Player 1.
+
+You have successfully completed
+another year of being you.
+
+And I hope I get to be there
+for every level that comes next.
+
+</p>
+
+
+<div
+class="game-font"
+style="
+color:#62A9E0;
+font-size:10px;
+letter-spacing:3px;
+"
+>
+
+ACHIEVEMENT UNLOCKED:
+
+<br><br>
+
+"ANOTHER YEAR WITH THE LOVE OF MY LIFE"
+
+</div>
+
+
+<br><br>
+
+
+<div
+class="game-font"
+style="
+color:#E4A28B;
+font-size:12px;
+"
+>
+
+TO BE CONTINUED...
+
+♥ ♥ ♥
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<div class="game-nav">
+
+
+<button onclick="goTo('level1')">
+
+START
+
+</button>
+
+
+<button onclick="goTo('level2')">
+
+QUEST
+
+</button>
+
+
+<button onclick="goTo('level3')">
+
+MEMORIES
+
+</button>
+
+
+<button onclick="goTo('level4')">
+
+LETTER
+
+</button>
+
+
+<button onclick="goTo('level5')">
+
+POEM
+
+</button>
+
+
+<button onclick="goTo('final')">
+
+FINISH
+
+</button>
+
+
+</div>
+
+
+</main>
 
 
 
 <script>
 
 /* =========================================================
+   THERO.EXE JAVASCRIPT
+========================================================= */
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const startScreen =
+document.getElementById("startScreen");
+
+const passwordScreen =
+document.getElementById("passwordScreen");
+
+const game =
+document.getElementById("game");
+
+const passwordInput =
+document.getElementById("passwordInput");
+
+const errorMessage =
+document.getElementById("errorMessage");
+
+const music =
+document.getElementById("music");
+
+const musicButton =
+document.getElementById("musicButton");
+
+
+/* =========================================================
+   START BUTTON
+========================================================= */
+
+function showPassword(){
+
+    startScreen.style.display="none";
+
+    passwordScreen.style.display="flex";
+
+}
+
+
+/* =========================================================
    PASSWORD
 ========================================================= */
 
-const loginButton =
-    document.getElementById("loginButton");
+function unlockGame(){
 
-const password =
-    document.getElementById("password");
-
-const loginScreen =
-    document.getElementById("loginScreen");
-
-const website =
-    document.getElementById("website");
-
-const error =
-    document.getElementById("error");
-
-
-const correctPasswords = [
-
-    "love",
-    "baby",
-    "spiderman",
-    "thero"
-
-];
-
-
-function unlock(){
-
-    const entered =
-        password.value
+    const password =
+        passwordInput.value
         .trim()
         .toLowerCase();
 
 
+    const validPasswords=[
+
+        "baby",
+
+        "spiderman",
+
+        "thero",
+
+        "love"
+
+    ];
+
+
     if(
-        correctPasswords.includes(entered)
+        validPasswords.includes(password)
     ){
 
-        loginScreen.classList.add("hide");
+        passwordScreen.style.display="none";
 
+        game.classList.add("active");
 
-        setTimeout(function(){
+        document.body.style.overflowY="auto";
 
-            loginScreen.style.display="none";
+        window.scrollTo(0,0);
 
-            website.classList.add("show");
-
-            document.body.style.overflowY="auto";
-
-            startMusic();
-
-        },800);
+        startMusic();
 
     }
 
     else{
 
-        error.style.display="block";
+        errorMessage.style.display="block";
 
+        passwordInput.classList.add("shake");
 
-        password.animate(
+        setTimeout(()=>{
 
-            [
-                {transform:"translateX(0)"},
-                {transform:"translateX(-8px)"},
-                {transform:"translateX(8px)"},
-                {transform:"translateX(0)"}
-            ],
+            passwordInput.classList.remove("shake");
 
-            {
-                duration:300
-            }
-
-        );
+        },500);
 
     }
 
 }
 
 
-loginButton.addEventListener(
-    "click",
-    unlock
-);
+/* =========================================================
+   ENTER KEY
+========================================================= */
 
+passwordInput.addEventListener(
 
-password.addEventListener(
     "keydown",
+
     function(event){
 
         if(event.key==="Enter"){
 
-            unlock();
+            unlockGame();
 
         }
 
     }
-);
 
-
-/* =========================================================
-   PHOTO UPLOAD
-========================================================= */
-
-const photoUpload =
-    document.getElementById("photoUpload");
-
-
-photoUpload.addEventListener(
-    "change",
-    function(){
-
-        const files =
-            Array.from(this.files);
-
-
-        files.forEach(
-            function(file,index){
-
-                if(index >= 8) return;
-
-
-                const reader =
-                    new FileReader();
-
-
-                reader.onload =
-                    function(event){
-
-                        const image =
-                            event.target.result;
-
-
-                        /*
-                           Gallery photos
-                        */
-
-                        const gallery =
-                            document.getElementById(
-                                "gallery"+(index+1)
-                            );
-
-
-                        if(gallery){
-
-                            gallery.src=image;
-
-                        }
-
-
-                        /*
-                           Floating photos
-                        */
-
-                        if(index < 3){
-
-                            const floating =
-                                document.querySelector(
-                                    "#floating"+(index+1)+" img"
-                                );
-
-
-                            if(floating){
-
-                                floating.src=image;
-
-                            }
-
-                        }
-
-                    };
-
-
-                reader.readAsDataURL(file);
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   MUSIC UPLOAD
-========================================================= */
-
-const songUpload =
-    document.getElementById("songUpload");
-
-const music =
-    document.getElementById("music");
-
-
-songUpload.addEventListener(
-    "change",
-    function(){
-
-        const file =
-            this.files[0];
-
-
-        if(!file) return;
-
-
-        const url =
-            URL.createObjectURL(file);
-
-
-        music.src=url;
-
-    }
 );
 
 
 /* =========================================================
    MUSIC
 ========================================================= */
-
-const musicButton =
-    document.getElementById("musicButton");
-
 
 function startMusic(){
 
@@ -2429,17 +3383,19 @@ function startMusic(){
 
 
     music.play()
-    .then(function(){
+
+    .then(()=>{
 
         musicButton.classList.add(
             "playing"
         );
 
     })
-    .catch(function(){
+
+    .catch(()=>{
 
         console.log(
-            "Click the music button to play."
+            "Music requires interaction."
         );
 
     });
@@ -2447,47 +3403,319 @@ function startMusic(){
 }
 
 
-musicButton.addEventListener(
-    "click",
-    function(){
+function toggleMusic(){
 
-        if(music.paused){
+    if(!music.src){
 
-            music.play();
+        alert(
+            "Add your song to the page first."
+        );
 
-            musicButton.classList.add(
-                "playing"
-            );
-
-        }
-
-        else{
-
-            music.pause();
-
-            musicButton.classList.remove(
-                "playing"
-            );
-
-        }
+        return;
 
     }
-);
+
+
+    if(music.paused){
+
+        music.play();
+
+        musicButton.classList.add(
+            "playing"
+        );
+
+    }
+
+    else{
+
+        music.pause();
+
+        musicButton.classList.remove(
+            "playing"
+        );
+
+    }
+
+}
 
 
 /* =========================================================
-   SMOOTH SCROLL
+   SMOOTH NAVIGATION
 ========================================================= */
 
 function goTo(id){
 
-    document
-        .getElementById(id)
-        .scrollIntoView({
+    const section =
+        document.getElementById(id);
+
+
+    if(section){
+
+        section.scrollIntoView({
+
             behavior:"smooth"
+
         });
 
+    }
+
 }
+
+
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+/*
+
+IMPORTANT:
+
+Because this is ONE HTML FILE,
+you can add your pictures by
+dragging them into the browser.
+
+For a permanent version,
+you can later embed the images
+directly into the HTML.
+
+*/
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    function(){
+
+        /*
+        Placeholder images.
+
+        Replace these later with
+        your actual photos.
+        */
+
+        const placeholders=[
+
+            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80",
+
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"
+
+        ];
+
+
+        for(
+            let i=0;
+            i<8;
+            i++
+        ){
+
+            const img =
+                document.getElementById(
+                    "photo"+(i+1)
+                );
+
+
+            if(img){
+
+                img.src=
+                    placeholders[i];
+
+            }
+
+        }
+
+
+        /*
+        Floating photos
+        */
+
+        for(
+            let i=1;
+            i<=3;
+            i++
+        ){
+
+            const img =
+                document.getElementById(
+                    "float"+i
+                );
+
+
+            if(img){
+
+                img.src=
+                    placeholders[i-1];
+
+            }
+
+        }
+
+    }
+
+);
+
+
+/* =========================================================
+   PARALLAX PHOTO MOVEMENT
+========================================================= */
+
+document.addEventListener(
+
+    "mousemove",
+
+    function(event){
+
+        const cards =
+            document.querySelectorAll(
+                ".memory-card"
+            );
+
+
+        const x =
+            (window.innerWidth/2-event.clientX)
+            /40;
+
+
+        const y =
+            (window.innerHeight/2-event.clientY)
+            /40;
+
+
+        cards.forEach(
+
+            (card,index)=>{
+
+                const multiplier =
+                    index+1;
+
+
+                card.style.marginLeft =
+                    (x*multiplier)+"px";
+
+
+                card.style.marginTop =
+                    (y*multiplier)+"px";
+
+            }
+
+        );
+
+    }
+
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+new IntersectionObserver(
+
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.style.opacity="1";
+
+                entry.target.style.transform=
+                    "translateY(0)";
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold:.15
+    }
+
+);
+
+
+document
+.querySelectorAll(
+    ".quest-box,.game-photo,.letter-paper,.poem-card"
+)
+.forEach(
+
+    element=>{
+
+        element.style.opacity="0";
+
+        element.style.transform=
+            "translateY(40px)";
+
+        element.style.transition=
+            "all .8s ease";
+
+
+        observer.observe(element);
+
+    }
+
+);
+
+
+/* =========================================================
+   KEYBOARD GAME CONTROLS
+========================================================= */
+
+document.addEventListener(
+
+    "keydown",
+
+    function(event){
+
+        /*
+        M = Memories
+        L = Letter
+        P = Poem
+        */
+
+        if(
+            game.classList.contains("active")
+        ){
+
+            if(event.key.toLowerCase()==="m"){
+
+                goTo("level3");
+
+            }
+
+
+            if(event.key.toLowerCase()==="l"){
+
+                goTo("level4");
+
+            }
+
+
+            if(event.key.toLowerCase()==="p"){
+
+                goTo("level5");
+
+            }
+
+        }
+
+    }
+
+);
 
 
 /* =========================================================
@@ -2496,8 +3724,10 @@ function goTo(id){
 
 document.body.style.overflow="hidden";
 
+
 </script>
 
 
 </body>
+
 </html>
