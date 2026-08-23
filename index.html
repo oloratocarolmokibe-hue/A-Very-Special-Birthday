@@ -3,475 +3,781 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 Thero · Birthday Cinema</title>
-    <!-- Fonts & Icons -->
+
+    <title>The Thero Story ❤️</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0b0b0f;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
-        /* ---- LOGIN CARD (movie theatre style) ---- */
-        .login-container {
-            background: rgba(18, 18, 28, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 215, 150, 0.3);
-            border-radius: 48px 48px 32px 32px;
-            padding: 48px 40px 56px;
-            max-width: 480px;
-            width: 100%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 2px rgba(255, 200, 130, 0.1) inset;
-            text-align: center;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .login-container h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 3.2rem;
-            background: linear-gradient(135deg, #f9d29d, #f7b87e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(255, 180, 80, 0.3);
-            margin-bottom: 8px;
-        }
-
-        .login-container .sub {
-            color: #b9a9a0;
-            font-size: 0.9rem;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            border-top: 1px solid rgba(255, 215, 150, 0.2);
-            border-bottom: 1px solid rgba(255, 215, 150, 0.2);
-            display: inline-block;
-            padding: 6px 18px;
-            margin-bottom: 32px;
-            font-weight: 300;
-        }
-
-        .login-container .film-icon {
-            font-size: 4rem;
-            color: #d4b48c;
-            opacity: 0.6;
-            margin-bottom: 20px;
-        }
-
-        .login-container label {
-            display: block;
-            color: #dfd3c7;
-            font-weight: 300;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-            text-align: left;
-        }
-
-        .login-container input {
-            width: 100%;
-            padding: 16px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 200, 150, 0.25);
-            border-radius: 60px;
-            font-size: 1rem;
-            color: #f5ede7;
-            outline: none;
-            transition: all 0.2s;
-            margin-bottom: 24px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .login-container input:focus {
-            border-color: #f5cba0;
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 20px rgba(245, 203, 160, 0.15);
-        }
-
-        .login-container input::placeholder {
-            color: #7a6b62;
-            font-weight: 300;
-            font-size: 0.9rem;
-        }
-
-        .login-btn {
-            background: linear-gradient(145deg, #d6a87a, #b5825a);
-            border: none;
-            padding: 16px 32px;
-            border-radius: 60px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1a1410;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.25s;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.6);
-            letter-spacing: 2px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .login-btn:hover {
-            transform: scale(1.02);
-            background: linear-gradient(145deg, #ecc19a, #c9976b);
-            box-shadow: 0 10px 28px rgba(200, 130, 70, 0.4);
-        }
-
-        .error-msg {
-            color: #e9b3a0;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            min-height: 24px;
-            font-weight: 300;
-        }
-
-        /* ---- MAIN WEBSITE (hidden until login) ---- */
-        .main-website {
-            display: none;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 12px 40px;
-            animation: fadeGlow 1s ease;
-        }
-
-        @keyframes fadeGlow {
-            0% { opacity: 0; transform: scale(0.98); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* header / title */
-        .movie-header {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            border-bottom: 2px solid rgba(255, 215, 150, 0.2);
-            padding-bottom: 12px;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
-        }
-
-        .movie-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 2.4rem;
-            background: linear-gradient(135deg, #fae3cd, #f7cbad);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .movie-header span {
-            color: #b8a69b;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            background: rgba(255, 215, 150, 0.1);
-            padding: 6px 18px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 215, 150, 0.1);
-        }
-
-        /* moving pictures grid */
-        .polaroid-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 24px 16px;
-            margin: 32px 0 48px;
-        }
-
-        .polaroid {
-            background: #1f1b17;
-            padding: 12px 12px 20px;
-            border-radius: 24px 24px 16px 16px;
-            box-shadow: 0 20px 30px -8px rgba(0,0,0,0.7);
-            transition: all 0.2s;
-            border: 1px solid rgba(255, 210, 160, 0.15);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: floatGlide 6s infinite alternate ease-in-out;
-        }
-
-        .polaroid:nth-child(odd) { animation-delay: 0.2s; }
-        .polaroid:nth-child(3n) { animation-delay: 1s; }
-        .polaroid:nth-child(5n) { animation-delay: 2.4s; }
-
-        @keyframes floatGlide {
-            0% { transform: translateY(0px) rotate(-1deg); }
-            100% { transform: translateY(-12px) rotate(1.5deg); }
-        }
-
-        .polaroid img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 18px;
-            background: #2d241e;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-            border: 2px solid #30281f;
-        }
-
-        .polaroid img:hover {
-            transform: scale(1.02) rotate(0deg);
-        }
-
-        .polaroid .caption {
-            margin-top: 10px;
-            color: #d4c3b6;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 300;
-            background: rgba(0,0,0,0.3);
-            padding: 4px 14px;
-            border-radius: 40px;
-        }
-
-        /* letter + poem card */
-        .love-letter-card {
-            background: rgba(26, 22, 20, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 215, 150, 0.2);
-            border-radius: 48px;
-            padding: 40px 32px;
-            margin: 24px 0 36px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .love-letter-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 2.2rem;
-            color: #f7dac6;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .love-letter-card .letter-content {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #efe2d7;
-            max-width: 720px;
-            margin: 0 auto 24px;
-            font-weight: 300;
-            text-align: center;
-            white-space: pre-line;
-        }
-
-        .poem-box {
-            background: rgba(0,0,0,0.3);
-            border-radius: 60px 20px 60px 20px;
-            padding: 28px 24px;
-            max-width: 580px;
-            margin: 20px auto 0;
-            border-left: 4px solid #dbb594;
-            border-right: 4px solid #dbb594;
-        }
-
-        .poem-box p {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.2rem;
-            color: #f3dfd0;
-            line-height: 1.7;
-        }
-
-        .poem-box .signature {
-            margin-top: 14px;
-            font-style: normal;
-            font-weight: 300;
-            color: #c6b2a1;
-            letter-spacing: 2px;
-        }
-
-        /* audio player */
-        .audio-player {
-            margin: 20px auto 10px;
-            text-align: center;
-        }
-
-        .audio-player audio {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 60px;
-            background: #1e1916;
-            filter: drop-shadow(0 0 10px rgba(200, 150, 100, 0.2));
-        }
-
-        /* footer */
-        .footer-note {
-            text-align: center;
-            margin-top: 30px;
-            color: #6d5f56;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            border-top: 1px solid rgba(255, 215, 150, 0.08);
-            padding-top: 28px;
-        }
-
-        /* responsive */
-        @media (max-width: 600px) {
-            .login-container { padding: 32px 20px; }
-            .login-container h1 { font-size: 2.6rem; }
-            .movie-header h2 { font-size: 1.8rem; }
-            .love-letter-card { padding: 28px 18px; }
-            .poem-box p { font-size: 1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- LOGIN SCREEN -->
-    <div id="loginScreen" class="login-container">
-        <div class="film-icon"><i class="fas fa-film"></i></div>
-        <h1>🎞️ THERO</h1>
-        <div class="sub">★ birthday cinema ★</div>
-        <label for="passwordInput"><i class="fas fa-key" style="margin-right: 8px; opacity:0.7;"></i> enter the secret code</label>
-        <input type="password" id="passwordInput" placeholder="··· ··· ···" autocomplete="off">
-        <button class="login-btn" id="loginBtn"><i class="fas fa-play" style="margin-right: 12px;"></i> LET THE SHOW BEGIN</button>
-        <div id="loginError" class="error-msg"></div>
-        <div style="margin-top: 18px; color: #6d5f56; font-size:0.7rem; letter-spacing:2px;">⋆ for Thero ⋆</div>
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-background"></div>
+    <div class="grain"></div>
+
+    <div class="login-content">
+
+        <div class="studio">
+            A SPECIAL PRESENTATION
+        </div>
+
+        <h1>
+            THE<br>
+            <span>THERO</span><br>
+            STORY
+        </h1>
+
+        <p class="tagline">
+            A birthday movie made for my favourite person.
+        </p>
+
+        <div class="login-box">
+
+            <div class="heart">
+                ♥
+            </div>
+
+            <h3>
+                PRIVATE SCREENING
+            </h3>
+
+            <p>
+                Enter the secret password to unlock your movie.
+            </p>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Our secret..."
+            >
+
+            <button id="loginBtn">
+                WATCH THE MOVIE
+                <span>→</span>
+            </button>
+
+            <div id="error">
+                Almost, baby... try again ♥
+            </div>
+
+        </div>
+
+        <p class="hint">
+            Hint: your favourite nickname from me...
+        </p>
+
+        <p class="copyright">
+            FOR THERO • MADE WITH LOVE
+        </p>
+
     </div>
 
-    <!-- MAIN WEBSITE (movie gallery) -->
-    <div id="mainWebsite" class="main-website">
-        <div class="movie-header">
-            <h2>🎬 happy birthday, baby</h2>
-            <span><i class="fas fa-crown" style="margin-right: 6px;"></i> big daddy · spiderman</span>
-        </div>
+</div>
 
-        <!-- moving pictures -->
-        <div class="polaroid-grid" id="photoGrid">
-            <!-- 9 placeholder photos (replace src with your own images) 
-                 but we keep it pretty with decorative placeholders + text -->
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&h=300&fit=crop&crop=center" alt="love"><div class="caption">you & me</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300&h=300&fit=crop&crop=center" alt="spiderman"><div class="caption">spidey</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1516826957135-700dedea698c?w=300&h=300&fit=crop&crop=center" alt="together"><div class="caption">big daddy</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300&h=300&fit=crop&crop=center" alt="love"><div class="caption">baby</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300&h=300&fit=crop&crop=center" alt="sunset"><div class="caption">our sun</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=300&h=300&fit=crop&crop=center" alt="stars"><div class="caption">starry nights</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1518495973542-2077e7d6f77d?w=300&h=300&fit=crop&crop=center" alt="laugh"><div class="caption">laugh with u</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=300&h=300&fit=crop&crop=center" alt="cuddle"><div class="caption">cuddles</div></div>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=300&fit=crop&crop=center" alt="beach"><div class="caption">forever</div></div>
-        </div>
 
-        <!-- letter + poem -->
-        <div class="love-letter-card">
-            <h3>❤️ my dearest Thero ❤️</h3>
-            <div class="letter-content">
-                Happy Birthday, my baby, my big daddy, my spiderman.  
-                I hope today is filled with everything you love — laughter, peace, and a little bit of magic.  
-                Every birthday we share will always feel like the opening scene of our favorite movie.  
-                You make ordinary days extraordinary, and today? Today is YOUR day.  
-                I love you more than all the stars in every galaxy.  
-                Thank you for being you — strong, kind, and my hero.  
-                Here’s to forever birthdays with you.  
+<!-- =====================================================
+     MAIN WEBSITE
+===================================================== -->
+
+<div id="movie" class="hidden">
+
+    <!-- MUSIC -->
+
+    <audio id="music" loop>
+        <source src="music/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicBtn" class="music-button">
+        ♫
+    </button>
+
+
+    <!-- =================================================
+         HERO SECTION
+    ================================================= -->
+
+    <header class="hero">
+
+        <nav>
+
+            <div class="logo">
+                T <span>♥</span> T
             </div>
-            <div class="poem-box">
+
+            <div class="nav-text">
+                A FILM ABOUT US
+            </div>
+
+        </nav>
+
+
+        <div class="hero-overlay"></div>
+
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                NOW PLAYING • YOUR SPECIAL DAY
+            </div>
+
+            <h1>
+
+                HAPPY
+
+                <br>
+
+                <i>BIRTHDAY</i>
+
+                <br>
+
+                <span>THERO</span>
+
+            </h1>
+
+            <p>
+
+                To my Baby.
+                My Big Daddy.
+                My Spiderman.
+
+                <br>
+
+                My favourite person in the whole story.
+
+            </p>
+
+            <button
+                class="gold-button"
+                onclick="scrollToSection('letter')"
+            >
+
+                BEGIN OUR STORY ↓
+
+            </button>
+
+        </div>
+
+
+        <!-- FLOATING PHOTOS -->
+
+        <div class="polaroid photo-one">
+
+            <img src="images/photo1.jpg">
+
+            <span>
+                my favourite smile
+            </span>
+
+        </div>
+
+
+        <div class="polaroid photo-two">
+
+            <img src="images/photo2.jpg">
+
+            <span>
+                my Spiderman ♥
+            </span>
+
+        </div>
+
+
+        <div class="polaroid photo-three">
+
+            <img src="images/photo3.jpg">
+
+            <span>
+                us
+            </span>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =================================================
+         INTRODUCTION
+    ================================================= -->
+
+    <section class="opening">
+
+        <div class="chapter">
+            01
+        </div>
+
+        <div class="opening-title">
+
+            <div class="eyebrow">
+                THE PREMISE
+            </div>
+
+            <h2>
+
+                Every great love story
+                <br>
+
+                has a favourite character.
+
+            </h2>
+
+        </div>
+
+        <p>
+
+            Mine is you, Thero.
+
+            This little website is my way of turning
+            your birthday into a movie because you
+            deserve a day that feels different,
+            special, intentional and completely yours.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         PHOTO GALLERY
+    ================================================= -->
+
+    <section class="gallery">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="eyebrow">
+                    SCENES FROM US
+                </div>
+
+                <h2>
+
+                    Moments I'd
+                    <br>
+
+                    rewatch forever.
+
+                </h2>
+
+            </div>
+
+            <div class="film-label">
+                ♥ PLAYING IN MY HEART
+            </div>
+
+        </div>
+
+
+        <div class="photo-grid">
+
+            <figure class="memory big">
+
+                <img src="images/photo4.jpg">
+
+                <figcaption>
+                    Scene I — My Baby
+                </figcaption>
+
+            </figure>
+
+
+            <figure class="memory tall">
+
+                <img src="images/photo5.jpg">
+
+                <figcaption>
+                    Scene II — My Big Daddy
+                </figcaption>
+
+            </figure>
+
+
+            <figure class="memory">
+
+                <img src="images/photo6.jpg">
+
+                <figcaption>
+                    Scene III — Just us
+                </figcaption>
+
+            </figure>
+
+
+            <figure class="memory">
+
+                <img src="images/photo7.jpg">
+
+                <figcaption>
+                    Scene IV — My Spiderman
+                </figcaption>
+
+            </figure>
+
+
+            <figure class="memory wide">
+
+                <img src="images/photo8.jpg">
+
+                <figcaption>
+                    Scene V — A memory worth keeping
+                </figcaption>
+
+            </figure>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LOVE LETTER
+    ================================================= -->
+
+    <section id="letter" class="letter-section">
+
+        <div class="chapter">
+            02
+        </div>
+
+
+        <div class="letter-container">
+
+            <div class="eyebrow">
+                A LETTER FOR YOU
+            </div>
+
+            <h2>
+                My Baby, Thero...
+            </h2>
+
+
+            <article class="letter">
+
                 <p>
-                    “For Thero, my love, my light,<br>
-                    You turn my darkness into bright.<br>
-                    Each year with you is a brand new reel,<br>
-                    And every birthday, my heart you steal.<br>
-                    Spiderman, baby, big daddy of mine,<br>
-                    Forever yours, till the end of time.”
+
+                    Happy birthday to my Baby, my Big Daddy,
+                    my Spiderman, and one of the most beautiful
+                    parts of my life.
+
                 </p>
-                <div class="signature">— always yours, <i class="fas fa-heart" style="color:#dbaa80;"></i></div>
+
+
+                <p>
+
+                    Today is about celebrating you — the person
+                    you are, the person you are becoming, your
+                    dreams, your heart, your smile, your strength,
+                    your softness, and even all the little things
+                    you do that you probably don't realise I notice.
+
+                    I hope you wake up today knowing just how
+                    loved you are. I hope you feel special,
+                    appreciated, wanted and celebrated, because
+                    you deserve every bit of it.
+
+                </p>
+
+
+                <p>
+
+                    I hope you have the most amazing birthday,
+                    Baby. I hope today gives you reasons to smile
+                    until your cheeks hurt. I hope you laugh,
+                    eat your favourite food, enjoy every little
+                    surprise and allow yourself to be spoiled.
+
+                    But most importantly, I hope you remember
+                    that your birthday is not just a celebration
+                    of another year.
+
+                    It is a celebration of the fact that the world
+                    got you — and somehow, I got lucky enough
+                    to have you in my life.
+
+                </p>
+
+
+                <p>
+
+                    I want you to know something:
+
+                    <strong>
+                        your birthdays will never be ordinary again.
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    Not while I am here.
+
+                    Every birthday we get to share is going to be
+                    magical, thoughtful and full of little pieces
+                    of our story.
+
+                    I want every year to have its own memory.
+
+                    I want photographs we can look back at,
+                    jokes only we understand, adventures we never
+                    planned, food we absolutely over-order, and
+                    moments that make us stop and think,
+
+                    "Wow, look how far we've come."
+
+                </p>
+
+
+                <p>
+
+                    I want to celebrate every version of you.
+
+                    The happy you.
+
+                    The tired you.
+
+                    The ambitious you.
+
+                    The silly you.
+
+                    The stubborn you.
+
+                    The quiet you.
+
+                    The Big Daddy you.
+
+                    The Spiderman you.
+
+                    All of you.
+
+                </p>
+
+
+                <p>
+
+                    I want to be there for the chapters nobody
+                    else sees and cheer the loudest when you
+                    accomplish the things you've been working
+                    toward.
+
+                </p>
+
+
+                <p>
+
+                    Thank you for every memory we already have.
+
+                    Thank you for every conversation,
+                    every laugh, every hug, every random moment,
+                    every look, every silly thing that somehow
+                    became a memory I treasure.
+
+                    Thank you for being someone I can love,
+                    annoy, laugh with and make beautiful
+                    memories with.
+
+                </p>
+
+
+                <p>
+
+                    I hope this next chapter of your life is kind
+                    to you.
+
+                    I hope it brings opportunities that make you
+                    proud, people who genuinely love you, peace
+                    when you need it, courage when things get
+                    hard, and happiness that stays long after
+                    your birthday candles disappear.
+
+                </p>
+
+
+                <p>
+
+                    And when another birthday comes around,
+                    I hope we are still here — older, wiser,
+                    probably still being ridiculous, but still
+                    choosing each other.
+
+                </p>
+
+
+                <p>
+
+                    I hope we look at this website and laugh
+                    at how everything started.
+
+                    I hope we have hundreds more photographs
+                    to add, hundreds more memories to make,
+                    and a lifetime of birthdays to celebrate.
+
+                </p>
+
+
+                <p>
+
+                    So happy birthday, my Baby.
+
+                    <br>
+
+                    My Big Daddy.
+
+                    <br>
+
+                    My Spiderman.
+
+                    <br>
+
+                    My favourite person.
+
+                </p>
+
+
+                <p class="signature">
+
+                    I love you more than this little movie
+                    could ever explain.
+
+                    <br><br>
+
+                    <span>
+                        Forever yours ♥
+                    </span>
+
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         POEM
+    ================================================= -->
+
+    <section class="poem">
+
+        <div>
+
+            <div class="eyebrow">
+                03 • A LITTLE POEM
             </div>
+
+            <h2>
+                For Thero
+            </h2>
+
+
+            <div class="poem-text">
+
+                <p>
+
+                    Some people are chapters,
+                    <br>
+
+                    some are stories,
+
+                    <br>
+
+                    but you, my love,
+
+                    <br>
+
+                    feel like the whole movie.
+
+                </p>
+
+
+                <p>
+
+                    Every laugh is a scene,
+
+                    <br>
+
+                    every hug is a home,
+
+                    <br>
+
+                    every birthday together
+
+                    <br>
+
+                    is another reason I know—
+
+                </p>
+
+
+                <p>
+
+                    That ordinary days
+
+                    <br>
+
+                    can become something bright,
+
+                    <br>
+
+                    when I'm beside you,
+
+                    <br>
+
+                    everything feels right.
+
+                </p>
+
+
+                <p>
+
+                    So here's to your birthday,
+
+                    <br>
+
+                    and all those to come,
+
+                    <br>
+
+                    to every new memory,
+
+                    <br>
+
+                    and every new sun.
+
+                </p>
+
+
+                <p>
+
+                    My Baby, my Big Daddy,
+
+                    <br>
+
+                    my Spiderman too—
+
+                    <br>
+
+                    if I could choose again,
+
+                    <br>
+
+                    I'd still choose you.
+
+                </p>
+
+            </div>
+
         </div>
 
-        <!-- music player (autoplay on login) -->
-        <div class="audio-player">
-            <audio id="bgMusic" controls loop autoplay>
-                <!-- replace src with your own song (mp3) or keep this lovely classical piece -->
-                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-                your browser does not support the audio element.
-            </audio>
+    </section>
+
+
+
+    <!-- =================================================
+         FINAL SCENE
+    ================================================= -->
+
+    <section class="final-scene">
+
+        <div class="final-background"></div>
+
+        <div class="final-content">
+
+            <div class="eyebrow">
+                THE END... OR JUST THE BEGINNING?
+            </div>
+
+
+            <h2>
+
+                TO BE
+
+                <br>
+
+                <i>CONTINUED.</i>
+
+            </h2>
+
+
+            <p>
+
+                Because our story has so many more
+                birthdays to celebrate.
+
+            </p>
+
+
+            <div class="credits">
+
+                <span>
+                    STARRING
+                </span>
+
+                <strong>
+                    THERO
+                </strong>
+
+
+                <span>
+                    CO-STARRING
+                </span>
+
+                <strong>
+                    THE GIRL WHO LOVES HIM VERY MUCH
+                </strong>
+
+
+                <span>
+                    GENRE
+                </span>
+
+                <strong>
+                    LOVE • COMEDY • FOREVER
+                </strong>
+
+            </div>
+
+
+            <h3>
+                HAPPY BIRTHDAY, BABY ♥
+            </h3>
+
         </div>
 
-        <div class="footer-note">
-            <i class="fas fa-camera-retro" style="margin-right: 6px;"></i> every moment with you is cinema  •  with love
-        </div>
-    </div>
+    </section>
 
-    <script>
-        (function() {
-            const loginScreen = document.getElementById('loginScreen');
-            const mainWebsite = document.getElementById('mainWebsite');
-            const passwordInput = document.getElementById('passwordInput');
-            const loginBtn = document.getElementById('loginBtn');
-            const errorMsg = document.getElementById('loginError');
 
-            // correct password (you can change it)
-            const CORRECT_PASSWORD = 'thero';
+    <footer>
 
-            // music element
-            const music = document.getElementById('bgMusic');
+        <span>
+            THE THERO STORY
+        </span>
 
-            function handleLogin() {
-                const entered = passwordInput.value.trim();
-                if (entered === CORRECT_PASSWORD) {
-                    // success
-                    loginScreen.style.display = 'none';
-                    mainWebsite.style.display = 'block';
-                    errorMsg.textContent = '';
+        <span>
+            MADE WITH LOVE • FOREVER & ALWAYS
+        </span>
 
-                    // attempt to play music (autoplay may be blocked, but we try)
-                    if (music) {
-                        music.play().catch(() => {
-                            // if autoplay blocked, user can click play manually
-                            console.log('autoplay blocked, user can click play');
-                        });
-                    }
+    </footer>
 
-                    // optional: remove error state
-                    passwordInput.value = '';
-                } else {
-                    errorMsg.textContent = '❌ hmm, that\'s not the secret code, baby. try again.';
-                    passwordInput.value = '';
-                    passwordInput.focus();
-                    // shake effect (tiny)
-                    loginScreen.style.transform = 'translateX(8px)';
-                    setTimeout(() => loginScreen.style.transform = 'translateX(-8px)', 80);
-                    setTimeout(() => loginScreen.style.transform = 'translateX(4px)', 160);
-                    setTimeout(() => loginScreen.style.transform = 'translateX(0)', 240);
-                }
-            }
+</div>
 
-            // login click
-            loginBtn.addEventListener('click', handleLogin);
 
-            // enter key on password field
-            passwordInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleLogin();
-                }
-            });
+<script src="script.js"></script>
 
-            // if user clicks on the login screen (focus)
-            // also we want to pre-fill? no.
-
-            // (optional) if already logged in? no.
-
-            // For demo: if you want to prefill password for testing, remove comment:
-            // passwordInput.value = 'thero';
-        })();
-    </script>
 </body>
 </html>
